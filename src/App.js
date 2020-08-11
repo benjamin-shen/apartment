@@ -1,25 +1,46 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+import { AuthProvider } from "./components/Auth";
+import PrivateRoute from "./components/PrivateRoute";
+import Home from "./components/Home";
+import Login from "./components/LogIn";
+// import Signup from "./components/SignUp";
+import "./styles/App.css";
+
+function PageNotFound() {
+  return <Redirect to="/" />;
+}
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <Router>
+        <div className="App">
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route
+              exact
+              path="/login/user"
+              render={(props) => <Login {...props} guest={false} />}
+            />
+            <Route
+              exact
+              path="/login/guest"
+              render={(props) => <Login {...props} guest={true} />}
+            />
+            {/*<Route exact path="/signup" component={Signup} />*/}
+            <PrivateRoute exact path="/user" component="user" guest={false} />
+            <PrivateRoute exact path="/guest" component="guest" guest={true} />
+            <Route component={PageNotFound} />
+          </Switch>
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 

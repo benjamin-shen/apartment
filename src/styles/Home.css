@@ -1,0 +1,20 @@
+.home {
+  margin: 30px 10px;
+}
+.home h1 {
+  margin-bottom: 20px;
+}
+.home h2 {
+  font-size: 2em;
+  margin: 0;
+}
+.home .btn {
+  margin: 10px;
+}
+.home .doorbell-button {
+  margin: 10px;
+}
+.home a {
+  text-decoration: none;
+  color: inherit;
+}

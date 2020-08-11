@@ -1,0 +1,10 @@
+.App {
+  text-align: center;
+  min-width: 350px;
+}
+.App .btn {
+  border-radius: 10px;
+}
+.App .container {
+  padding-top: 80px;
+}
