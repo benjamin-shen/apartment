@@ -6,5 +6,8 @@
   border-radius: 10px;
 }
 .App .container {
-  padding-top: 80px;
+  padding-top: 60px;
+}
+.loading {
+  margin-left: 5px;
 }

@@ -1,24 +1,39 @@
-import React, { useCallback, useState, useContext } from "react";
-import { Container } from "react-bootstrap";
+import React, { useContext, useState, useCallback } from "react";
+import { Container, Button } from "react-bootstrap";
 import { withRouter, Redirect } from "react-router-dom";
 import { AuthContext } from "./Auth";
 import app from "./base";
 import Back from "./Back";
+import "../styles/Login.css";
+
+// app.functions().useFunctionsEmulator("http://localhost:5000");
+const validate = app.functions().httpsCallable("validate");
 
 const LogIn = ({ history, guest }) => {
   const [error, setError] = useState("");
+  const [login, setLogin] = useState(null);
 
-  const handleLogIn = useCallback(
+  const { currentUser, guestUser } = useContext(AuthContext);
+
+  const handleLogin = useCallback(
     async (event) => {
       event.preventDefault();
       const { email, password } = event.target.elements;
+      const user = email && email.value;
+      const pass = password && password.value;
       try {
-        if (!guest && !email.value) throw Error("Missing email.");
-        if (!password.value) throw Error("Missing password.");
-        const username = guest
-          ? "benjaminshen22+401bguest@gmail.com"
-          : email.value;
-        await app.auth().signInWithEmailAndPassword(username, password.value);
+        if (!user) throw Error("Missing email.");
+        if (!pass) throw Error("Missing password.");
+        if (login) {
+          await app.auth().signInWithEmailAndPassword(user, pass);
+        } else {
+          const valid = (await validate(pass)).data;
+          if (valid) {
+            await app.auth().createUserWithEmailAndPassword(user, pass);
+          } else {
+            throw Error("Incorrect guest password.");
+          }
+        }
         history.push(guest ? "/guest" : "/user");
       } catch (err) {
         setError("Error!!!");
@@ -27,10 +42,9 @@ const LogIn = ({ history, guest }) => {
         }, 500);
       }
     },
-    [history, guest]
+    [history, guest, login]
   );
 
-  const { currentUser, guestUser } = useContext(AuthContext);
   if (currentUser) {
     return <Redirect to={guestUser ? "/guest" : "/user"} />;
   }
@@ -39,18 +53,21 @@ const LogIn = ({ history, guest }) => {
     <div className="login">
       <Back />
       <Container>
-        <form onSubmit={handleLogIn}>
-          {guest || (
-            <div className="form-group">
-              <label htmlFor="email">Email Address</label>
-              <input
-                name="email"
-                type="email"
-                className="form-control"
-                placeholder="Your email"
-              />
-            </div>
-          )}
+        <form onSubmit={handleLogin}>
+          <div className="form-group">
+            <label htmlFor="email">Email Address</label>
+            <input
+              name="email"
+              type="email"
+              className="form-control"
+              placeholder="Your email"
+            />
+            {guest && (
+              <small className="form-text text-muted">
+                We may email you for contact tracing purposes.
+              </small>
+            )}
+          </div>
           <div className="form-group">
             <label htmlFor="password">Password</label>
             <input
@@ -59,16 +76,20 @@ const LogIn = ({ history, guest }) => {
               className="form-control"
               placeholder={guest ? "Guest password" : "Your password"}
             />
-            {guest && (
-              <small className="form-text text-muted">
-                Please ask a resident if you don't know the password.
-              </small>
-            )}
           </div>
           <p className="text-danger">{error}</p>
-          <button type="submit" className="btn btn-primary">
+          <Button type="submit" onClick={() => setLogin(true)}>
             Log In
-          </button>
+          </Button>
+          {guest && (
+            <Button
+              variant="secondary"
+              type="submit"
+              onClick={() => setLogin(false)}
+            >
+              Sign Up
+            </Button>
+          )}
         </form>
       </Container>{" "}
     </div>

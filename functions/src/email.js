@@ -1,14 +1,12 @@
 const nodemailer = require("nodemailer");
 
-const config = require("../env.json").gmail.auth;
-
 // async..await is not allowed in global scope, must use a wrapper
-async function main() {
+async function main(auth) {
   let transporter = nodemailer.createTransport({
     host: "smtp.gmail.com",
     port: 465,
     secure: true,
-    auth: config,
+    auth,
   });
 
   let info = await transporter.sendMail({
@@ -22,6 +20,6 @@ async function main() {
   console.log("Message sent: %s", info.messageId);
 }
 
-exports.send = () => {
-  main().catch(console.error);
+exports.send = (credentials) => {
+  main(credentials).catch(console.error);
 };

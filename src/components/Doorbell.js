@@ -20,6 +20,7 @@ function Doorbell() {
   }, []);
 
   const ring = () => {
+    // TODO add check to avoid spam
     ringDoorbell().then((res) => {
       console.log(res.data);
     });

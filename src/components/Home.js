@@ -26,7 +26,7 @@ function Home() {
               <h3>
                 You are signed in as{" "}
                 <Link to="/guest" className="text-info">
-                  a guest
+                  {currentUser.displayName || currentUser.email || "a guest"}
                 </Link>
                 .
               </h3>
@@ -34,7 +34,7 @@ function Home() {
               <h3>
                 You are signed in as{" "}
                 <Link to="/user" className="text-info">
-                  {currentUser.displayName || "a user"}
+                  {currentUser.displayName || currentUser.email || "a user"}
                 </Link>
                 .
               </h3>
