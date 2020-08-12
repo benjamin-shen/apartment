@@ -15,7 +15,9 @@ const LogIn = ({ history, guest }) => {
       try {
         if (!guest && !email.value) throw Error("Missing email.");
         if (!password.value) throw Error("Missing password.");
-        const username = guest ? "benjaminshen22@gmail.com" : email.value;
+        const username = guest
+          ? "benjaminshen22+401bguest@gmail.com"
+          : email.value;
         await app.auth().signInWithEmailAndPassword(username, password.value);
         history.push(guest ? "/guest" : "/user");
       } catch (err) {

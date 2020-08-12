@@ -8,6 +8,7 @@ import "../styles/Home.css";
 
 function Home() {
   const { currentUser, guestUser } = useContext(AuthContext);
+  // currentUser.updateProfile({displayName: "a user"})
 
   return (
     <div className="home">
@@ -23,17 +24,17 @@ function Home() {
           {currentUser &&
             (guestUser ? (
               <h3>
-                You are signed in as a{" "}
+                You are signed in as{" "}
                 <Link to="/guest" className="text-info">
-                  guest
+                  a guest
                 </Link>
                 .
               </h3>
             ) : (
               <h3>
-                You are signed in as a{" "}
+                You are signed in as{" "}
                 <Link to="/user" className="text-info">
-                  user
+                  {currentUser.displayName || "a user"}
                 </Link>
                 .
               </h3>

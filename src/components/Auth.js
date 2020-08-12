@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     app.auth().onAuthStateChanged((user) => {
       setCurrentUser(user);
-      setGuestUser(user && user.uid === "om19GsPssbXqyml2XRZmEyrQdS72");
+      setGuestUser(user && user.uid === "4kxqYOpFircVGYKMKWiSNIaPCk73");
       setPending(false);
     });
   }, []);
