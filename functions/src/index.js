@@ -1,5 +1,7 @@
 //const express = require("express");
 //const router = express.Router();
+const moment = require("moment");
+require("moment-timezone");
 
 const env = require("../env.json");
 
@@ -16,8 +18,12 @@ admin.initializeApp({
   databaseURL: "https://apt-401b.firebaseio.com",
 });
 
-exports.ringDoorbell = functions.https.onCall(() => {
-  email.send(emailCredentials);
+exports.ringDoorbell = functions.https.onCall((userEmail) => {
+  email.send(
+    emailCredentials,
+    userEmail,
+    moment().tz("America/New_York").format("MMMM Do YYYY, h:mma")
+  );
   return "Doorbell rang.";
 });
 

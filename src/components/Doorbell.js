@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Button } from "react-bootstrap";
 import useSound from "use-sound";
+import { AuthContext } from "./Auth";
 import app from "./base";
 import dingdong from "../assets/sounds/dingdong.mp3";
 
@@ -19,9 +20,12 @@ function Doorbell() {
     };
   }, []);
 
+  const { currentUser } = useContext(AuthContext);
+
   const ring = () => {
-    // TODO add check to avoid spam
-    ringDoorbell().then((res) => {
+    // TODO add checks to avoid spam
+    const userEmail = currentUser && currentUser.email;
+    ringDoorbell(userEmail).then((res) => {
       console.log(res.data);
     });
 
