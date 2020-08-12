@@ -4,7 +4,7 @@ import useSound from "use-sound";
 import app from "./base";
 import dingdong from "../assets/sounds/dingdong.mp3";
 
-// app.functions().useFunctionsEmulator("http://localhost:5000");
+ app.functions().useFunctionsEmulator("http://localhost:5000");
 const ringDoorbell = app.functions().httpsCallable("ringDoorbell");
 
 function Doorbell() {

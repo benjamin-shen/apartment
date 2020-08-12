@@ -1,10 +1,11 @@
-const express = require("express");
+//const express = require("express");
+//const router = express.Router();
 
-const serviceAccount = require("./env.json").firebase.credentials;
+const serviceAccount = require("../env.json").firebase.credentials;
 const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 
-//const router = express.Router();
+const email = require("./email.js");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -12,5 +13,6 @@ admin.initializeApp({
 });
 
 exports.ringDoorbell = functions.https.onCall(() => {
+  email.send();
   return "Doorbell rang.";
 });
