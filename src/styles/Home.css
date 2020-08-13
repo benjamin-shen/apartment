@@ -24,3 +24,6 @@
   margin: 10px;
   float: none !important;
 }
+.home .text-info {
+  word-break: break-word;
+}

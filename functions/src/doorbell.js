@@ -65,12 +65,13 @@ async function sendMessage(name, email, time) {
           bot_id: groupmeBotId,
         },
       },
-      function (error, response, body) {
+      (error, response, body) => {
         if (!error && response.statusCode === 201) {
           // console.log(body);
         }
       }
     );
+
     console.log("Message sent.");
   } catch (err) {
     console.log(err);

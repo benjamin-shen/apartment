@@ -7,7 +7,6 @@ import Nav from "./Nav";
 import Back from "./Back";
 import "../styles/Login.css";
 
-// app.functions().useFunctionsEmulator("http://localhost:5000");
 const validate = app.functions().httpsCallable("validate");
 
 const LogIn = ({ history, guest }) => {

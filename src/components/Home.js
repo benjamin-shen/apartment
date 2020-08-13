@@ -13,7 +13,13 @@ function Home() {
   return (
     <div className="home">
       <Container>
-        <h1>Welcome to 401 Eddy St Apt B</h1>
+        <h1>
+          <div>
+            Welcome to<span className="d-md"> </span>
+            <br className="d-md-none" />
+            401 Eddy St Apt B
+          </div>
+        </h1>
         <main>
           <div className="doorbell-button">
             <Doorbell />
@@ -22,7 +28,8 @@ function Home() {
           {currentUser &&
             (guestUser ? (
               <h3>
-                You are signed in as{" "}
+                You are signed in as<span className="d-md"> </span>
+                <br className="d-md-none" />
                 <Link to="/guest" className="text-info">
                   {currentUser.displayName || currentUser.email || "a guest"}
                 </Link>
@@ -30,7 +37,8 @@ function Home() {
               </h3>
             ) : (
               <h3>
-                You are signed in as{" "}
+                You are signed in as<span className="d-md"> </span>
+                <br className="d-md-none" />
                 <Link to="/user" className="text-info">
                   {currentUser.displayName || currentUser.email || "a user"}
                 </Link>

@@ -3,7 +3,8 @@
     "guestPassword": "GUEST_PASSWORD"
   },
   "firebase": {
-    "credentials": "FIREBASE_CREDENTIALS_JSON"
+    "credentials": "FIREBASE_CREDENTIALS_JSON",
+    "databaseUrl": "https://apt-401b.firebaseio.com"
   },
   "gmail": {
     "auth": {
