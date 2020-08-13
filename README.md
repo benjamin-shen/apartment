@@ -19,7 +19,23 @@ This section is essential for setting up the app by yourself. Firebase is used f
 2. Work in the top-level folder of the cloned repo. Log in to your newly created project using the [Firebase CLI](https://firebase.google.com/docs/cli). Run `firebase use --add`, select your project id, and name it "default".
 3. Create a new app in the Firebase console. Make sure to set up Firebase Hosting for the app.
 4. Follow the instructions under [Hosting](#hosting).
-4. In the Firebase console's Settings > General, under your newly created app, copy the config object to `firebase.config` in `src/env.json`.
+4. In the Firebase console's Settings > General, under your newly created app, copy the config object to `firebase.config` in `src/env.json`. 
+
+   The config object looks like
+   ```
+   const firebaseConfig = {
+    apiKey: "...",
+    authDomain: "...",
+    databaseURL: "...",
+    projectId: "...",
+    storageBucket: "...",
+    messagingSenderId: "...",
+    appId: "...,
+    measurementId: "..."
+   };
+   ```
+   Copy the json object and convert it into a hash by replacing the keys with string literals. 
+   
 5. Follow the instructions under [Admin](#admin).
 6. Follow the instructions under [Authentication](#authentication).
 7. Run `firebase deploy` in the top-level folder to deploy all of the features. You can now view the project where it is hosted.
