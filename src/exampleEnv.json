@@ -1,4 +1,14 @@
 {
+  "app": {
+    "name": "401B",
+    "address": "401 Eddy St Apt B",
+    "users": [
+      "7lwir23rS2cPEtUgEbJ3XHJ7qGJ3",
+      "DvOJKEOnd7PC1JEs9pJYQnbT3ee2",
+      "ebU4uaxXw4biF9hSW7weQP77urz1",
+      "HOUSEMATE_FIREBASE_AUTH_UIDS"
+    ]
+  },
   "firebase": {
     "config": "FIREBASE_CONFIG_JSON"
   }

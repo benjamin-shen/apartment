@@ -6,19 +6,24 @@ import Doorbell from "./Doorbell";
 import SignOut from "./SignOut";
 import "../styles/Home.css";
 
+const address = require("../env.json").app.address;
+
 function Home() {
   const { currentUser, guestUser } = useContext(AuthContext);
-  // currentUser.updateProfile({displayName: "a user"})
+  // TODO option to add name
+  // currentUser.updateProfile({displayName: "DISPLAY_NAME_HERE"})
 
   return (
     <div className="home">
       <Container>
         <h1>
-          <div>
-            Welcome to<span className="d-md"> </span>
-            <br className="d-md-none" />
-            401 Eddy St Apt B
-          </div>
+          {address && (
+            <div>
+              Welcome to<span className="d-md"> </span>
+              <br className="d-md-none" />
+              {address}
+            </div>
+          )}
         </h1>
         <main>
           <div className="doorbell-button">

@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet";
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,6 +13,10 @@ import Login from "./components/LogIn";
 // import Signup from "./components/SignUp";
 import "./styles/App.css";
 
+const appEnv = require("./env.json").app;
+const appName = appEnv.name;
+const appDescription = appEnv.address;
+
 function PageNotFound() {
   return <Redirect to="/" />;
 }
@@ -20,6 +25,15 @@ function App() {
   return (
     <AuthProvider>
       <Router>
+        <Helmet>
+          <meta charSet="utf-8" />
+          {appName && <title>{appName}</title>}
+          {appName && <meta name="title" content={appName} />}
+          {appDescription && <description>{appDescription}</description>}
+          {appDescription && (
+            <meta name="description" content={appDescription} />
+          )}
+        </Helmet>
         <div className="App">
           <Switch>
             <Route exact path="/" component={Home} />

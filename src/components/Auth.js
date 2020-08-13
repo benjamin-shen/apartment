@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import app from "./base";
 
-const users = new Set([
-  "7lwir23rS2cPEtUgEbJ3XHJ7qGJ3",
-  "DvOJKEOnd7PC1JEs9pJYQnbT3ee2",
-  "ebU4uaxXw4biF9hSW7weQP77urz1",
-]);
+const uids = require("../env.json").app.uids;
+
+const users = new Set(uids);
 
 export const AuthContext = React.createContext();
 
