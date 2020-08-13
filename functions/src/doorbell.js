@@ -3,8 +3,9 @@ const request = require("request");
 
 const env = require("../env.json");
 
+const url = env.app.url;
+
 const gmailAuth = env.gmail.auth;
-const sourceUrl = env.gmail.sourceUrl;
 const sender = env.gmail.sender;
 const recipients = env.gmail.recipients;
 
@@ -20,7 +21,7 @@ async function sendEmail(name, email, time) {
 
     let html = `<p>${
       detailedInfo ? detailedInfo : "Someone"
-    } rang the doorbell on <a href="${sourceUrl}">${sourceUrl}</a>.</p>${
+    } rang the doorbell${url && ` on <a href="${url}">${url}</a>`}.</p>${
       time && `<p>Time: <em>${time.format("MMMM Do YYYY, h:mma")}</em></p>`
     }`;
 
