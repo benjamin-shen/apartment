@@ -49,9 +49,9 @@ This section is for sending doorbell notifications via Gmail.
 
 This section is for sending doorbell notifications in a GroupMe chat. If you don't have a GroupMe account or don't want to use GroupMe, you can skip this section.
 
-1. Go to (dev.groupme.com)[https://dev.groupme.com] and copy your access token to `groupme.auth_token` in `functions/env.json`.
+1. Go to [dev.groupme.com](https://dev.groupme.com) and copy your access token to `groupme.auth_token` in `functions/env.json`.
 2. Create a new group chat with yourself. You can add members/housemates later.
-3. (Create a new bot)[https://dev.groupme.com/bots] in the group you just made. Copy the bot id to `groupme.bot_id` in `functions/env.json`.
+3. [Create a new bot](https://dev.groupme.com/bots) in the group you just made. Copy the bot id to `groupme.bot_id` in `functions/env.json`.
 
 ## Contributing
 
