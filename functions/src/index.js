@@ -9,8 +9,7 @@ const serviceAccount = env.firebase.credentials;
 const admin = require("firebase-admin");
 const functions = require("firebase-functions");
 
-const email = require("./email.js");
-const emailCredentials = env.gmail.auth;
+const doorbell = require("./doorbell.js");
 const guestPassword = env.app.guestPassword;
 
 admin.initializeApp({
@@ -18,15 +17,14 @@ admin.initializeApp({
   databaseURL: "https://apt-401b.firebaseio.com",
 });
 
-exports.ringDoorbell = functions.https.onCall((userEmail) => {
-  email.send(
-    emailCredentials,
-    userEmail,
-    moment().tz("America/New_York").format("MMMM Do YYYY, h:mma")
+exports.ringDoorbell = functions.https.onCall((data, { auth }) => {
+  doorbell.ring(
+    auth.token.name,
+    auth.token.email,
+    moment().tz("America/New_York")
   );
-  return "Doorbell rang.";
 });
 
-exports.validate = functions.https.onCall((password) => {
+exports.validate = functions.https.onCall(({ password }) => {
   return password === guestPassword;
 });

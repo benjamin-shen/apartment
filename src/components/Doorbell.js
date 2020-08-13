@@ -1,11 +1,10 @@
-import React, { useState, useEffect, useRef, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "react-bootstrap";
 import useSound from "use-sound";
-import { AuthContext } from "./Auth";
 import app from "./base";
 import dingdong from "../assets/sounds/dingdong.mp3";
 
-// app.functions().useFunctionsEmulator("http://localhost:5000");
+app.functions().useFunctionsEmulator("http://localhost:5000");
 const ringDoorbell = app.functions().httpsCallable("ringDoorbell");
 
 function Doorbell() {
@@ -20,13 +19,11 @@ function Doorbell() {
     };
   }, []);
 
-  const { currentUser } = useContext(AuthContext);
-
   const ring = () => {
     // TODO add checks to avoid spam
-    const userEmail = currentUser && currentUser.email;
-    ringDoorbell(userEmail).then((res) => {
-      console.log(res.data);
+    ringDoorbell().then((res) => {
+      // console.log(res.data);
+      console.log("Rang doorbell.");
     });
 
     setRang(true);

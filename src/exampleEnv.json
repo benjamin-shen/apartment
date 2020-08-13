@@ -1,0 +1,5 @@
+{
+  "firebase": {
+    "config": "FIREBASE_CONFIG_JSON"
+  }
+}

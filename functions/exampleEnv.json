@@ -1,0 +1,21 @@
+{
+  "app": {
+    "guestPassword": "GUEST_PASSWORD"
+  },
+  "firebase": {
+    "credentials": "FIREBASE_CREDENTIALS_JSON"
+  },
+  "gmail": {
+    "auth": {
+      "user": "benjaminshen22@gmail.com",
+      "pass": "GMAIL_PASSWORD [Turn on Less Secure Apps and clear captcha (https://support.google.com/mail/thread/32840224?hl=en)]"
+    },
+    "sender": "'401B Doorbell' <benjaminshen22@gmail.com>",
+    "recipients": ["benjaminshen22+401b@gmail.com"],
+    "sourceUrl": "https://apt.benjaminshen.com"
+  },
+  "groupme": {
+    "auth_token": "GROUPME_AUTH_TOKEN",
+    "bot_id": "GROUPME_BOT_ID [Create a bot in the group where you want doorbell notifications (https://dev.groupme.com/bots)]"
+  }
+}
