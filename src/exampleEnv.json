@@ -11,14 +11,14 @@
   },
   "firebase": {
     "config": {
-      apiKey: "",
-      authDomain: "",
-      databaseURL: "h",
-      projectId: "",
-      storageBucket: "",
-      messagingSenderId: "",
-      appId: "",
-      measurementId: ""
+      "apiKey": "",
+      "authDomain": "",
+      "databaseURL": "h",
+      "projectId": "",
+      "storageBucket": "",
+      "messagingSenderId": "",
+      "appId": "",
+      "measurementId": ""
     }
   }
 }
