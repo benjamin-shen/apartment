@@ -2,8 +2,6 @@
 
 This website is built with React and hosted at [apt.benjaminshen.com](https://apt.benjaminshen.com).
 
-## Guide
-
 This project is open-source. Forks and contributions are welcomed.
 
 ## Getting Started
