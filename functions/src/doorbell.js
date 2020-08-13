@@ -58,7 +58,7 @@ async function sendMessage(name, email, time) {
     text += `\nTime: ${time.calendar()}`;
 
     request.post(
-      "https://api.groupme.com/v3/bots/post" + "?token=" + groupmeAuthToken,
+      "https://api.groupme.com/v3/bots/post?token=" + groupmeAuthToken,
       {
         json: {
           text,
@@ -66,7 +66,7 @@ async function sendMessage(name, email, time) {
         },
       },
       function (error, response, body) {
-        if (!error && response.statusCode == 201) {
+        if (!error && response.statusCode === 201) {
           // console.log(body);
         }
       }

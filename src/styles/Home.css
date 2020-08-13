@@ -1,5 +1,7 @@
 .home {
-  margin: 30px 10px;
+  height: 100%;
+  display: grid;
+  place-items: center;
 }
 .home h1 {
   margin-bottom: 20px;
@@ -8,13 +10,17 @@
   font-size: 2em;
   margin: 0;
 }
-.home .btn {
-  margin: 10px;
-}
-.home .doorbell-button {
-  margin: 10px;
-}
 .home a {
   text-decoration: none;
   color: inherit;
+}
+.home .doorbell-button {
+  margin: 20px;
+}
+.home .login-button {
+  margin: 10px;
+}
+.home .signout {
+  margin: 10px;
+  float: none !important;
 }

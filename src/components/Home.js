@@ -13,9 +13,7 @@ function Home() {
   return (
     <div className="home">
       <Container>
-        <header>
-          <h1>Welcome to 401 Eddy St Apt B</h1>
-        </header>
+        <h1>Welcome to 401 Eddy St Apt B</h1>
         <main>
           <div className="doorbell-button">
             <Doorbell />
@@ -43,12 +41,12 @@ function Home() {
             <SignOut />
           ) : (
             <div className="login-buttons">
-              <Button variant="outline-dark" size="sm">
+              <Button variant="outline-dark" size="sm" className="login-button">
                 <Link to="/login/guest">
                   <h2>Guest Log In</h2>
                 </Link>
               </Button>
-              <Button variant="outline-dark" size="sm">
+              <Button variant="outline-dark" size="sm" className="login-button">
                 <Link to="/login/user">
                   <h2>House Log In</h2>
                 </Link>

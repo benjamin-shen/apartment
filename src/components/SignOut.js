@@ -6,9 +6,9 @@ import "../styles/SignOut.css";
 
 function SignOut() {
   return (
-    <Link to="/" className="signout">
-      <Button variant="danger" onClick={() => app.auth().signOut()}>
-        <h4>Sign Out</h4>
+    <Link to="/" className="">
+      <Button variant="danger" className="signout float-right" onClick={() => app.auth().signOut()}>
+        Sign Out
       </Button>
     </Link>
   );

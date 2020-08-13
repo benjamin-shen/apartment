@@ -1,3 +1,9 @@
 .login .btn {
   margin: 10px;
 }
+.login h1 {
+  margin-top: 20px;
+}
+.login form {
+  margin: 20px;
+}

@@ -1,12 +1,10 @@
 .App {
+  height: 100%;
   text-align: center;
   min-width: 350px;
 }
 .App .btn {
   border-radius: 10px;
-}
-.App .container {
-  padding-top: 60px;
 }
 .loading {
   margin-left: 5px;

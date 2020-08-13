@@ -1,13 +1,17 @@
 import React from "react";
+import { Container } from "react-bootstrap";
 import Back from "./Back";
 import SignOut from "./SignOut";
+import "../styles/Guest.css";
 
 const Guest = () => {
   return (
-    <div>
+    <div className="guest">
       <Back />
       <SignOut />
-      <h1>Guest</h1>
+      <Container>
+        <h1>Guest</h1>
+      </Container>
     </div>
   );
 };

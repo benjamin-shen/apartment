@@ -3,6 +3,7 @@ import { Container, Button } from "react-bootstrap";
 import { withRouter, Redirect } from "react-router-dom";
 import { AuthContext } from "./Auth";
 import app from "./base";
+import Nav from "./Nav";
 import Back from "./Back";
 import "../styles/Login.css";
 
@@ -51,8 +52,11 @@ const LogIn = ({ history, guest }) => {
 
   return (
     <div className="login">
-      <Back />
+      <Nav>
+        <Back />
+      </Nav>
       <Container>
+        <h1>{guest ? "Guest" : "User"} Login</h1>
         <form onSubmit={handleLogin}>
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
