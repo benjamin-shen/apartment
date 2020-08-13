@@ -35,7 +35,7 @@ This section is essential for setting up the app by yourself. Firebase is used f
 2. Edit `firebase.databaseUrl` in `functions/env.json`. This should just be the same as `firebase.config.databaseURL` in `src/env.json` ("https://<project-id>.firebaseio.com").
 
 #### Authentication
-1. Set up email authentication on the Firebase console and manually add users for you and your housemates. Copy these uids to `app.uids` in `src/env.json`.
+1. Set up email authentication on the Firebase console and manually add users for you and your housemates. Copy the uids to `app.uids` in `src/env.json`.
 2. Pick a guest password that your guests can sign up with, and write it to `app.guestPassword` in `functions/env.json`.
 
 ### Gmail
@@ -50,6 +50,20 @@ This section is for sending doorbell notifications in a GroupMe chat. If you don
 
 (WIP)
 
-## Scripts
+## Contributing
 
-(WIP)
+Before starting to work on the project, make sure to run `yarn install` in the top-level folder and `npm install` in `functions/`.
+
+### Frontend
+
+All of the frontend code is in `public/` and `src/`. To host the frontend locally, run `yarn start`. Run `yarn build` to build the distribution code (in `build/`) from React.
+
+#### Deploy
+Run `yarn deploy` to build the frontend and deploy all the Firebase features. Append `--only <feature>` to only deploy that feature (eg. `yarn deploy --only hosting`).
+
+### Backend
+
+All of the backend code is in `functions/src/`. To host the backend locally, run `npm run shell` in the `functions/` folder. In `src/components/base.js`, uncomment the functions emulator line. Remember to comment it before deploying!
+
+#### Deploy
+Run `npm run deploy` in the `functions/` folder to deploy all of the cloud functions. To deploy a specific function, run `firebase deploy --only functions:<functionName>` (eg. `firebase deploy --only functions:doorbell`).
