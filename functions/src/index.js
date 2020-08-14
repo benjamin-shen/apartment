@@ -18,6 +18,10 @@ admin.initializeApp({
   databaseURL,
 });
 
+exports.validate = functions.https.onCall((password) => {
+  return password === guestPassword;
+});
+
 exports.ringDoorbell = functions.https.onCall((data, { auth }) => {
   return doorbell
     .ring(
@@ -30,6 +34,14 @@ exports.ringDoorbell = functions.https.onCall((data, { auth }) => {
     });
 });
 
-exports.validate = functions.https.onCall((password) => {
-  return password === guestPassword;
+exports.logDoorbell = functions.https.onCall((month) => {
+  return admin
+    .firestore()
+    .collection("log")
+    .doc(month)
+    .collection("doorbell")
+    .add({ time: new Date() })
+    .catch((err) => {
+      console.log(err);
+    });
 });

@@ -1,10 +1,17 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Button } from "react-bootstrap";
 import useSound from "use-sound";
+import * as moment from "moment";
+import "moment-timezone";
 import app from "./base";
+import { AuthContext } from "./Auth";
 import dingdong from "../assets/sounds/dingdong.mp3";
 
+moment.tz.setDefault("Americas/New_York");
+
+const log = app.firestore().collection("log");
 const ringDoorbell = app.functions().httpsCallable("ringDoorbell");
+const logDoorbell = app.functions().httpsCallable("logDoorbell");
 
 function Doorbell() {
   const [playSound] = useSound(dingdong);
@@ -18,12 +25,44 @@ function Doorbell() {
     };
   }, []);
 
+  const { currentUser } = useContext(AuthContext);
+
   const ring = () => {
+    const time = moment();
+    const month = time.format("YYYY-MM");
+
     // TODO add checks to avoid spam
-    ringDoorbell().then((res) => {
-      // console.log(res.data);
-      console.log("Rang doorbell.");
-    });
+    ringDoorbell()
+      .then(() => {
+        console.log("Rang doorbell.");
+      })
+      .catch((err) => {
+        console.log("Couldn't ring doorbell.");
+        console.log(err);
+      });
+
+    if (currentUser) {
+      log
+        .doc(month)
+        .collection("doorbell")
+        .add({ user: currentUser, time: Date(time) })
+        .then(() => {
+          console.log("Logged doorbell.");
+        })
+        .catch((err) => {
+          console.log("Couldn't log doorbell.");
+          console.log(err);
+        });
+    } else {
+      logDoorbell(month)
+        .then(() => {
+          console.log("Logged anonymous doorbell.");
+        })
+        .catch((err) => {
+          console.log("Couldn't log anonymous doorbell.");
+          console.log(err);
+        });
+    }
 
     setRang(true);
     setJustRang(true);

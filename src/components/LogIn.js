@@ -1,12 +1,14 @@
 import React, { useContext, useState, useCallback } from "react";
 import { Container, Button } from "react-bootstrap";
 import { withRouter, Redirect } from "react-router-dom";
+import * as moment from "moment";
 import { AuthContext } from "./Auth";
 import app from "./base";
 import Nav from "./Nav";
 import Back from "./Back";
 import "../styles/Login.css";
 
+const log = app.firestore().collection("log");
 const validate = app.functions().httpsCallable("validate");
 
 const LogIn = ({ history, guest }) => {
@@ -14,6 +16,21 @@ const LogIn = ({ history, guest }) => {
   const [login, setLogin] = useState(null);
 
   const { currentUser, guestUser } = useContext(AuthContext);
+
+  const logLogin = (user) => {
+    const time = moment();
+    log
+      .doc(time.format("YYYY-MM"))
+      .collection("login")
+      .add({ user, time: Date(time) })
+      .then(() => {
+        console.log("Logged login.");
+      })
+      .catch((err) => {
+        console.log("Couldn't log login.");
+        console.log(err);
+      });
+  };
 
   const handleLogin = useCallback(
     async (event) => {
@@ -26,10 +43,12 @@ const LogIn = ({ history, guest }) => {
         if (!pass) throw Error("Missing password.");
         if (login) {
           await app.auth().signInWithEmailAndPassword(user, pass);
+          logLogin(user);
         } else {
           const valid = (await validate(pass)).data;
           if (valid) {
             await app.auth().createUserWithEmailAndPassword(user, pass);
+            logLogin(user);
           } else {
             throw Error("Incorrect guest password.");
           }
