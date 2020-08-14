@@ -55,17 +55,15 @@ This section is essential for setting up the app by yourself. Firebase is used f
 This section is for sending doorbell notifications via Gmail.
 
 1. Log in to your Google account, navigate to your Security tab, turn on "Less Secure Apps." If you still run into issues with the cloud function, try [clearing the Captcha](https://support.google.com/mail/thread/32840224?hl=en).
-2. Edit `gmail.auth.user` and `gmail.auth.pass` with your email address and password.
-3. Edit `gmail.sender` with the sender's display name.
-4. Edit `gmail.recipients` with a list of email recipients (eg. your housemates).
+2. Edit `gmail.auth.user` and `gmail.auth.pass` in `functions/env.json` with your email address and password. Edit `gmail.sender` with the sender's display name. Edit `gmail.recipients` with a list of email recipients (eg. your housemates).
 
 ### GroupMe
 
 This section is for sending doorbell notifications in a GroupMe chat. If you don't have a GroupMe account or don't want to use GroupMe, you can skip this section.
 
-1. Go to [dev.groupme.com](https://dev.groupme.com) and copy your access token to `groupme.auth_token` in `functions/env.json`.
-2. Create a new group chat with yourself. You can add members/housemates later.
-3. [Create a new bot](https://dev.groupme.com/bots) in the group you just made. Copy the bot id to `groupme.bot_id` in `functions/env.json`.
+1. Go to [dev.groupme.com](https://dev.groupme.com). Log in and copy your access token to `groupme.auth_token` in `functions/env.json`.
+2. [Create a new bot](https://dev.groupme.com/bots) in your house group chat. If you don't have a group chat, you can create a new one on the Groupme app. 
+3. Copy the bot id to `groupme.bot_id` in `functions/env.json`.
 
 ## Contributing
 
