@@ -6,7 +6,7 @@ const env = require("../env.json");
 const url = env.app.url;
 
 const gmailAuth = env.gmail.auth;
-const sender = env.gmail.sender;
+const senderName = env.gmail.sender;
 const recipients = env.gmail.recipients;
 
 async function sendEmail(name, email, time) {
@@ -24,6 +24,8 @@ async function sendEmail(name, email, time) {
     } rang the doorbell${url && ` on <a href="${url}">${url}</a>`}.</p>${
       time && `<p>Time: <em>${time.format("MMMM Do YYYY, h:mma")}</em></p>`
     }`;
+
+    const sender = `"${senderName}" <${gmailAuth.user}>`;
 
     let mail = await nodemailer
       .createTransport({

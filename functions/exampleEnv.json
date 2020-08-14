@@ -10,13 +10,13 @@
   "gmail": {
     "auth": {
       "user": "benjaminshen22@gmail.com",
-      "pass": "GMAIL_PASSWORD [Turn on Less Secure Apps and clear captcha (https://support.google.com/mail/thread/32840224?hl=en)]"
+      "pass": "GMAIL_PASSWORD"
     },
-    "sender": "'401B Doorbell' <benjaminshen22@gmail.com>",
+    "sender": "401B Doorbell",
     "recipients": ["benjaminshen22+401b@gmail.com"]
   },
   "groupme": {
     "auth_token": "GROUPME_AUTH_TOKEN",
-    "bot_id": "GROUPME_BOT_ID [Create a bot in the group where you want doorbell notifications (https://dev.groupme.com/bots)]"
+    "bot_id": "GROUPME_BOT_ID"
   }
 }
