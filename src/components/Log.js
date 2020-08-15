@@ -69,7 +69,7 @@ const Log = ({ type }) => {
         const user = doc.get("user");
         return (
           <tr key={doc.id}>
-            <td>{moment(time.toDate()).calendar()}</td>
+            <td>{time && moment(time.toDate()).calendar()}</td>
             <td>
               {user ? <a href={"mailto:" + user}>{user}</a> : "anonymous"}
             </td>
@@ -91,7 +91,7 @@ const Log = ({ type }) => {
       }
     });
     const collapsedDataArray = Object.entries(collapsedData);
-    collapsedDataArray.sort((a, b) => a[1] - b[1]);
+    collapsedDataArray.sort((a, b) => b[1] - a[1]);
     return (
       <>
         {collapsedDataArray.map((entry) => {

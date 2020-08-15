@@ -28,6 +28,7 @@ const User = () => {
           User{": " + currentUser.displayName || ": " + currentUser.email}
         </h1>
         <Log type="doorbell" />
+        <Log type="login" />
       </Container>
     </div>
   );

@@ -25,7 +25,7 @@ const LogIn = ({ history, guest }) => {
     log
       .doc(time.format("YYYY-MM"))
       .collection("login")
-      .add({ user, time: Date(time) })
+      .add({ user, time: new Date(time) })
       .then(() => {
         console.log("Logged login.");
       })
