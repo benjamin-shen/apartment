@@ -7,7 +7,7 @@ This project is open-source. Forks and contributions are welcomed.
 ## Getting Started
 
 1. Clone the repo. Duplicate `src/exampleEnv.json` and `functions/exampleEnv.json` and rename the files to `env.json` in their respective folders.
-2. Edit `app.name` and `app.address` in `src/env.json`. 
+2. Edit `app.name` and `app.address` in `src/env.json`.
 3. Follow the instructions under [Firebase](#firebase).
 4. Follow the instructions under [Gmail](#gmail) and [GroupMe](#groupme).
 
@@ -39,16 +39,20 @@ This section is essential for setting up the app by yourself. Firebase is used f
 8. Run `firebase deploy` in the top-level folder to deploy all of the features. You can now view the project where it is hosted.
 
 #### Hosting
+
 1. If you want to host your app on a custom domain, click "Add Custom Domain" in the Hosting tab in the Firebase console and follow the instructions.
 2. Copy your app's url to `app.url` in `functions/env.json`.
 
 #### Admin
+
 1. In the Firebase Console's Settings > Service accounts, click "Generate new private key" and copy the contents to `firebase.credentials` in `functions/env.json`.
 2. Edit `firebase.databaseUrl` in `functions/env.json`. This should just be the same as `firebase.config.databaseURL` in `src/env.json` ("https://`<project-id>`.firebaseio.com").
 
 #### Authentication
+
 1. Set up email authentication on the Firebase console and manually add users for you and your housemates. Copy the uids to `app.uids` in `src/env.json`.
 2. Pick a guest password that your guests can sign up with, and write it to `app.guestPassword` in `functions/env.json`.
+3. Customize your email templates in the firebase console.
 
 ### Gmail
 
@@ -62,7 +66,7 @@ This section is for sending doorbell notifications via Gmail.
 This section is for sending doorbell notifications in a GroupMe chat. If you don't have a GroupMe account or don't want to use GroupMe, you can skip this section.
 
 1. Go to [dev.groupme.com](https://dev.groupme.com). Log in and copy your access token to `groupme.auth_token` in `functions/env.json`.
-2. [Create a new bot](https://dev.groupme.com/bots) in your house group chat. If you don't have a group chat, you can create a new one on the Groupme app. 
+2. [Create a new bot](https://dev.groupme.com/bots) in your house group chat. If you don't have a group chat, you can create a new one on the Groupme app.
 3. Copy the bot id to `groupme.bot_id` in `functions/env.json`.
 
 ## Contributing
@@ -74,6 +78,7 @@ Before starting to work on the project, make sure to run `yarn install` in the t
 All of the frontend code is in `public/` and `src/`. To host the frontend locally, run `yarn start`. Run `yarn build` to build the distribution code (in `build/`) from React.
 
 #### Deploy
+
 Run `yarn deploy` to build the frontend and deploy all the Firebase features. Append `--only <feature>` to only deploy that feature (eg. `yarn deploy --only hosting`).
 
 ### Backend
@@ -81,4 +86,5 @@ Run `yarn deploy` to build the frontend and deploy all the Firebase features. Ap
 All of the backend code is in `functions/src/`. To host the backend locally, run `npm run shell` in the `functions/` folder. In `src/components/base.js`, uncomment the functions emulator line. Remember to comment it before deploying!
 
 #### Deploy
+
 Run `npm run deploy` in the `functions/` folder to deploy all of the cloud functions. To deploy a specific function, run `firebase deploy --only functions:<functionName>` (eg. `firebase deploy --only functions:doorbell`).

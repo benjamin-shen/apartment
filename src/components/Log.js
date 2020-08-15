@@ -70,7 +70,7 @@ const Log = ({ type }) => {
         return (
           <tr key={doc.id}>
             <td>{time && moment(time.toDate()).calendar()}</td>
-            <td>
+            <td className="individual-email">
               {user ? <a href={"mailto:" + user}>{user}</a> : "anonymous"}
             </td>
           </tr>
@@ -100,7 +100,9 @@ const Log = ({ type }) => {
           return (
             <tr key={user}>
               <td>{count}</td>
-              <td>{user && <a href={"mailto:" + user}>{user}</a>}</td>
+              <td className="individual-email">
+                {user && <a href={"mailto:" + user}>{user}</a>}
+              </td>
             </tr>
           );
         })}

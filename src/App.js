@@ -10,7 +10,7 @@ import { AuthProvider } from "./components/Auth";
 import PrivateRoute from "./components/PrivateRoute";
 import Home from "./components/Home";
 import Login from "./components/LogIn";
-// import Signup from "./components/SignUp";
+import VerifyEmail from "./components/VerifyEmail";
 import "./styles/App.css";
 
 const appEnv = require("./env.json").app;
@@ -46,7 +46,7 @@ function App() {
               path="/login/guest"
               render={(props) => <Login {...props} guest={true} />}
             />
-            {/*<Route exact path="/signup" component={Signup} />*/}
+            <Route exact path="/verifyEmail" component={VerifyEmail} />
             <PrivateRoute exact path="/user" component="user" guest={false} />
             <PrivateRoute exact path="/guest" component="guest" guest={true} />
             <Route component={PageNotFound} />
