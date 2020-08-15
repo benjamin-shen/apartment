@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext, useRef } from "react";
 import { Button } from "react-bootstrap";
 import useSound from "use-sound";
-import * as moment from "moment";
+import moment from "moment";
 import "moment-timezone";
 import app from "./base";
 import { AuthContext } from "./Auth";
@@ -45,7 +45,7 @@ function Doorbell() {
       log
         .doc(month)
         .collection("doorbell")
-        .add({ user: currentUser, time: Date(time) })
+        .add({ user: currentUser.email, time: new Date(time) })
         .then(() => {
           console.log("Logged doorbell.");
         })

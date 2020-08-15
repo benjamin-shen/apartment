@@ -1,12 +1,15 @@
 import React, { useContext, useState, useCallback } from "react";
 import { Container, Button } from "react-bootstrap";
 import { withRouter, Redirect } from "react-router-dom";
-import * as moment from "moment";
+import moment from "moment";
+import "moment-timezone";
 import { AuthContext } from "./Auth";
 import app from "./base";
 import Nav from "./Nav";
 import Back from "./Back";
 import "../styles/Login.css";
+
+moment.tz.setDefault("Americas/New_York");
 
 const log = app.firestore().collection("log");
 const validate = app.functions().httpsCallable("validate");

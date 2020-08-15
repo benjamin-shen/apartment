@@ -21,7 +21,7 @@ function Home() {
             <div>
               Welcome to<span className="d-md"> </span>
               <br className="d-md-none" />
-              {address}
+              <span className="address">{address}</span>
             </div>
           )}
         </h1>

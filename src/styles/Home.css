@@ -24,6 +24,9 @@
   margin: 10px;
   float: none !important;
 }
+.home .address {
+  word-break: break-word;
+}
 .home .text-info {
   word-break: break-word;
 }

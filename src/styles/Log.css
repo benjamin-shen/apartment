@@ -1,0 +1,25 @@
+.user .log {
+  padding: 20px;
+  border-radius: 10px;
+}
+.user .log h2 {
+  display: block;
+  float: left;
+}
+.user .log-button {
+  margin: 5px 10px 20px 10px;
+  float: right;
+}
+.user .log .table {
+  margin: 0;
+}
+.user .log .email a {
+  text-decoration: none;
+  color: #495057;
+}
+.user .log .email a:hover {
+  color: black;
+}
+.user .log .email img {
+  vertical-align: baseline;
+}

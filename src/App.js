@@ -29,7 +29,6 @@ function App() {
           <meta charSet="utf-8" />
           {appName && <title>{appName}</title>}
           {appName && <meta name="title" content={appName} />}
-          {appDescription && <description>{appDescription}</description>}
           {appDescription && (
             <meta name="description" content={appDescription} />
           )}
