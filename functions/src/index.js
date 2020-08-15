@@ -22,11 +22,12 @@ exports.validate = functions.https.onCall((password) => {
   return password === guestPassword;
 });
 
-exports.ringDoorbell = functions.https.onCall((data, { auth }) => {
+exports.ringDoorbell = functions.https.onCall((_, { auth }) => {
   return doorbell
     .ring(
       auth && auth.token.name,
       auth && auth.token.email,
+      auth && auth.token.email_verified,
       moment().tz("America/New_York")
     )
     .catch((err) => {

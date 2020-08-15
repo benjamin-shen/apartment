@@ -41,7 +41,7 @@ function Doorbell() {
         console.log(err);
       });
 
-    if (currentUser) {
+    if (currentUser && currentUser.emailVerified) {
       log
         .doc(month)
         .collection("doorbell")
@@ -56,10 +56,14 @@ function Doorbell() {
     } else {
       logDoorbell(month)
         .then(() => {
-          console.log("Logged anonymous doorbell.");
+          if (currentUser) {
+            console.log("Logged unverified doorbell.");
+          } else {
+            console.log("Logged anonymous doorbell.");
+          }
         })
         .catch((err) => {
-          console.log("Couldn't log anonymous doorbell.");
+          console.log("Couldn't log doorbell.");
           console.log(err);
         });
     }

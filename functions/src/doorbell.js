@@ -9,10 +9,15 @@ const gmailAuth = env.gmail.auth;
 const senderName = env.gmail.sender;
 const recipients = env.gmail.recipients;
 
-async function sendEmail(name, email, time) {
+async function sendEmail(name, email, verified, time) {
   try {
-    const info = name ? name : email ? email : null;
-    const detailedInfo = name && email ? name + ` (${email})` : info;
+    const info = name ? name : email && verified ? email : null;
+    const detailedInfo =
+      name && email && verified
+        ? name + ` (${email})`
+        : email && !verified
+        ? email + `(unverified)`
+        : info;
 
     let subject = "Ding Dong!";
     if (info) {
@@ -81,9 +86,9 @@ async function sendMessage(name, email, time) {
   }
 }
 
-async function ring(name, email, time) {
+async function ring(name, email, verified, time) {
   await sendMessage(name, email, time);
-  await sendEmail(name, email, time);
+  await sendEmail(name, email, verified, time);
 }
 
 exports.ring = ring;
