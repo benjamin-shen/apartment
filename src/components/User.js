@@ -25,7 +25,9 @@ const User = () => {
       </Nav>
       <Container>
         <h1>
-          User{": " + currentUser.displayName || ": " + currentUser.email}
+          User
+          {(currentUser.displayName && ": " + currentUser.displayName) ||
+            (currentUser.email && ": " + currentUser.email)}
         </h1>
         <Log type="doorbell" />
         <Log type="login" />

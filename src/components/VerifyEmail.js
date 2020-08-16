@@ -24,7 +24,7 @@ const VerifyEmail = ({ history }) => {
     currentUser
       .reload()
       .then(() => {
-        history.push(location.pathname);
+        if (currentUser.emailVerified) history.push(location.pathname);
       })
       .catch((err) => {
         console.log(err);
@@ -71,16 +71,14 @@ const VerifyEmail = ({ history }) => {
         >
           Resend Verification Email
         </Button>
-        {emailSent && (
-          <Button
-            size="lg"
-            variant="success"
-            onClick={reload}
-            className="action-button"
-          >
-            I have verified!
-          </Button>
-        )}
+        <Button
+          size="lg"
+          variant="success"
+          onClick={reload}
+          className="action-button"
+        >
+          I have verified!
+        </Button>
         {error ? (
           <p className="text-danger">Error: {error}</p>
         ) : (

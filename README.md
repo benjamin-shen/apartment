@@ -4,6 +4,8 @@ This website is built with React and hosted at [apt.benjaminshen.com](https://ap
 
 This project is open-source. Forks and contributions are welcomed.
 
+<!-- TODO firestore rules, manual database additions -->
+
 ## Getting Started
 
 1. Clone the repo. Duplicate `src/exampleEnv.json` and `functions/exampleEnv.json` and rename the files to `env.json` in their respective folders.
@@ -50,7 +52,7 @@ This section is essential for setting up the app by yourself. Firebase is used f
 
 #### Authentication
 
-1. Set up email authentication on the Firebase console and manually add users for you and your housemates. Copy the uids to `app.uids` in `src/env.json`.
+1. Set up email authentication on the Firebase console and manually add users for you and your housemates. Add their UIDs as a string list field to `app/private` in Firestore.
 2. Pick a guest password that your guests can sign up with, and write it to `app.guestPassword` in `functions/env.json`.
 3. Customize your email templates in the firebase console.
 

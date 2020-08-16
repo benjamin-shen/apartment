@@ -1,4 +1,10 @@
-import React, { useContext, useState, useCallback } from "react";
+import React, {
+  useContext,
+  useState,
+  useRef,
+  useEffect,
+  useCallback,
+} from "react";
 import { Container, Button } from "react-bootstrap";
 import { withRouter, Redirect } from "react-router-dom";
 import { AuthContext } from "./Auth";
@@ -12,6 +18,13 @@ const validate = app.functions().httpsCallable("validate");
 const LogIn = ({ history, guest }) => {
   const [error, setError] = useState("");
   const [login, setLogin] = useState(null);
+
+  const mountedRef = useRef(true);
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   const { currentUser, guestUser } = useContext(AuthContext);
 
@@ -48,6 +61,7 @@ const LogIn = ({ history, guest }) => {
       } catch (err) {
         setError("Error!");
         setTimeout(function () {
+          if (!mountedRef.current) return null;
           setError(err.message);
         }, 500);
       }
