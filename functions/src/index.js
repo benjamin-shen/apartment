@@ -18,6 +18,25 @@ admin.initializeApp({
   databaseURL,
 });
 
+const getUids = () => {
+  return admin
+    .firestore()
+    .collection("app")
+    .doc("private")
+    .get()
+    .then((doc) => {
+      const data = doc.exists && doc.data();
+      if (data && data.uids) return data.uids;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.getUids = functions.https.onCall(async () => {
+  return await getUids();
+});
+
 exports.validate = functions.https.onCall((password) => {
   return password === guestPassword;
 });

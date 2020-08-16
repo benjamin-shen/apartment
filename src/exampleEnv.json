@@ -1,8 +1,7 @@
 {
   "app": {
     "name": "401B",
-    "address": "401 Eddy St Apt B",
-    "uids": ["############################", "HOUSEMATE_FIREBASE_AUTH_UIDS"]
+    "address": "401 Eddy St Apt B"
   },
   "firebase": {
     "config": {

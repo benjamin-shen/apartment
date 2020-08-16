@@ -1,0 +1,15 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function emailVerified() {
+    	return request.auth != null && request.auth.token.email_verified;
+    }
+    
+    match /log/{month} {
+      allow read, write: if emailVerified();
+    }
+    
+    match /app/info {
+    	allow read: if emailVerified();
+    }
+  }
+}

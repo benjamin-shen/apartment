@@ -62,22 +62,21 @@ const Log = ({ type }) => {
     else setFullLog(currentMonth_snapshot.docs.concat(prevMonth_snapshot.docs));
   }, [currentMonth_snapshot, prevMonth_snapshot]);
 
-  const expandedRows = () => (
-    <>
-      {fullLog.map((doc) => {
-        const time = doc.get("time");
-        const user = doc.get("user");
-        return (
-          <tr key={doc.id}>
-            <td>{time && moment(time.toDate()).calendar()}</td>
-            <td className="individual-email">
-              {user ? <a href={"mailto:" + user}>{user}</a> : "anonymous"}
-            </td>
-          </tr>
-        );
-      })}
-    </>
-  );
+  const expandedRows = () => {
+    const result = fullLog.map((doc) => {
+      const time = doc.get("time");
+      const user = doc.get("user");
+      return (
+        <tr key={doc.id}>
+          <td>{time && moment(time.toDate()).calendar()}</td>
+          <td className="individual-email">
+            {user ? <a href={"mailto:" + user}>{user}</a> : "anonymous"}
+          </td>
+        </tr>
+      );
+    });
+    return result.length ? <>{result}</> : "";
+  };
   const collapsedRows = () => {
     const collapsedData = {};
     fullLog.forEach((doc) => {
@@ -92,22 +91,19 @@ const Log = ({ type }) => {
     });
     const collapsedDataArray = Object.entries(collapsedData);
     collapsedDataArray.sort((a, b) => b[1] - a[1]);
-    return (
-      <>
-        {collapsedDataArray.map((entry) => {
-          const count = entry[1];
-          const user = entry[0];
-          return (
-            <tr key={user}>
-              <td>{count}</td>
-              <td className="individual-email">
-                {user && <a href={"mailto:" + user}>{user}</a>}
-              </td>
-            </tr>
-          );
-        })}
-      </>
-    );
+    const result = collapsedDataArray.map((entry) => {
+      const count = entry[1];
+      const user = entry[0];
+      return (
+        <tr key={user}>
+          <td>{count}</td>
+          <td className="individual-email">
+            {user && <a href={"mailto:" + user}>{user}</a>}
+          </td>
+        </tr>
+      );
+    });
+    return result.length ? <>{result}</> : "";
   };
   const mailtoAll = () => {
     const collapsedData = {};
@@ -146,25 +142,45 @@ const Log = ({ type }) => {
         <tbody>
           {currentMonth_error && (
             <tr>
-              <td colSpan="2">There was an error loading this month's data.</td>
+              <td colSpan="2">
+                There was an error loading this month's {type.toLowerCase()}{" "}
+                data.
+              </td>
             </tr>
           )}
           {prevMonth_error && (
             <tr>
-              <td colSpan="2">There was an error loading last month's data.</td>
+              <td colSpan="2">
+                There was an error loading last month's {type.toLowerCase()}{" "}
+                data.
+              </td>
             </tr>
           )}
           {currentMonth_loading && (
             <tr>
-              <td colSpan="2">Loading this month's data.</td>
+              <td colSpan="2">
+                Loading this month's {type.toLowerCase()} data.
+              </td>
             </tr>
           )}
           {prevMonth_loading && (
             <tr>
-              <td colSpan="2">Loading last month's data.</td>
+              <td colSpan="2">
+                Loading last month's {type.toLowerCase()} data.
+              </td>
             </tr>
           )}
-          {expand ? expandedRows() : collapsedRows()}
+          {(expand ? expandedRows() : collapsedRows()) ||
+            (!(
+              currentMonth_error ||
+              prevMonth_error ||
+              currentMonth_loading ||
+              prevMonth_loading
+            ) && (
+              <tr>
+                <td colSpan="2">There is no {type.toLowerCase()} data.</td>
+              </tr>
+            ))}
         </tbody>
       </table>
     </div>
