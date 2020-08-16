@@ -23,7 +23,7 @@ const log = app.firestore().collection("log");
 const ringDoorbell = app.functions().httpsCallable("ringDoorbell");
 const logDoorbell = app.functions().httpsCallable("logDoorbell");
 
-function Doorbell() {
+const Doorbell = () => {
   const [playSound] = useSound(dingdong);
   const [rang, setRang] = useState(false);
   const [justRang, setJustRang] = useState(false);
@@ -45,13 +45,9 @@ function Doorbell() {
     const month = time.format("YYYY-MM");
 
     try {
-      if (lastInvoked && !isValidDate(lastInvoked)) {
-        console.log("Local storage corrupted.");
-        console.log(lastInvokedKey + ": " + lastInvoked);
-        writeStorage(lastInvokedKey, time.format());
-      }
       if (
         !lastInvoked ||
+        !isValidDate(lastInvoked) ||
         time.diff(moment(lastInvoked)) >= lastInvokedThrottle
       ) {
         writeStorage(lastInvokedKey, time.format());
@@ -100,7 +96,7 @@ function Doorbell() {
 
     setRang(true);
     setJustRang(true);
-    setTimeout(function () {
+    setTimeout(() => {
       if (!mountedRef.current) return null;
       setJustRang(false);
     }, 5000);
@@ -120,6 +116,6 @@ function Doorbell() {
       <h2>{justRang ? "Ringing..." : rang ? "Ring Again" : "Ring Doorbell"}</h2>
     </Button>
   );
-}
+};
 
 export default Doorbell;

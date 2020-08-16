@@ -17,11 +17,11 @@ const appEnv = require("./env.json").app;
 const appName = appEnv.name;
 const appDescription = appEnv.address;
 
-function PageNotFound() {
+const PageNotFound = () => {
   return <Redirect to="/" />;
-}
+};
 
-function App() {
+const App = () => {
   return (
     <AuthProvider>
       <Router>
@@ -55,6 +55,6 @@ function App() {
       </Router>
     </AuthProvider>
   );
-}
+};
 
 export default App;

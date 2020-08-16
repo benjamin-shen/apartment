@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import app from "./base";
 import "../styles/SignOut.css";
 
-function SignOut() {
+const SignOut = () => {
   return (
     <Link to="/" className="">
       <Button
@@ -16,6 +16,6 @@ function SignOut() {
       </Button>
     </Link>
   );
-}
+};
 
 export default SignOut;

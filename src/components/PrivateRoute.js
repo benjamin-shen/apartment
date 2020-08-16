@@ -39,13 +39,9 @@ const PrivateRoute = ({ component, guest, ...rest }) => {
       const time = moment();
 
       try {
-        if (lastInvoked && !isValidDate(lastInvoked)) {
-          console.log("Local storage corrupted.");
-          console.log(lastInvokedKey + ": " + lastInvoked);
-          writeStorage(lastInvokedKey, time.format());
-        }
         if (
           !lastInvoked ||
+          !isValidDate(lastInvoked) ||
           time.diff(moment(lastInvoked)) >= lastInvokedThrottle
         ) {
           writeStorage(lastInvokedKey, time.format());

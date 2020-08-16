@@ -34,6 +34,7 @@ const LogIn = ({ history, guest }) => {
       const { email, password } = event.target.elements;
       const user = email && email.value;
       const pass = password && password.value;
+      setError("");
       try {
         if (!user) throw Error("Missing email.");
         if (!pass) throw Error("Missing password.");
@@ -56,11 +57,10 @@ const LogIn = ({ history, guest }) => {
             throw Error("Incorrect guest password.");
           }
         }
-        setError("");
         history.push(guest ? "/guest" : "/user");
       } catch (err) {
         setError("Error!");
-        setTimeout(function () {
+        setTimeout(() => {
           if (!mountedRef.current) return null;
           setError(err.message);
         }, 500);
