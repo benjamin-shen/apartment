@@ -6,7 +6,7 @@ import "../styles/Back.css";
 const Back = () => {
   return (
     <Link to="/">
-      <Button variant="outline-dark" className="back float-left">
+      <Button variant="outline-light" className="back float-left">
         Back
       </Button>
     </Link>

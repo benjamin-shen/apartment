@@ -9,3 +9,18 @@
 .message {
   margin-left: 5px;
 }
+
+@media (max-width: 450px) {
+  h1 {
+    font-size: 2em;
+  }
+  h2 {
+    font-size: 1.6em;
+  }
+  h3 {
+    font-size: 1.4em;
+  }
+  .App {
+    font-size: 0.9em;
+  }
+}

@@ -8,8 +8,9 @@
   float: left;
 }
 .user .log-button {
-  margin: 5px 10px 20px 10px;
+  margin: 0;
   float: right;
+  border-radius: 5px !important;
 }
 .user .log .table {
   margin: 0;
