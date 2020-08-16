@@ -23,8 +23,11 @@ const log = app.firestore().collection("log");
 
 const PrivateRoute = ({ component, guest, ...rest }) => {
   const { currentUser, guestUser } = useContext(AuthContext);
+  const info = currentUser && currentUser.email && ":" + currentUser.email;
 
-  const [lastInvoked] = useLocalStorage(lastInvokedKey);
+  const [lastInvoked] = useLocalStorage(lastInvokedKey + info);
+  const writeLocalStorage = (time) =>
+    writeStorage(lastInvokedKey + info, time.format());
 
   if (!currentUser) {
     return <Redirect to={guest ? "/login/guest" : "/login/user"} />;
@@ -44,7 +47,7 @@ const PrivateRoute = ({ component, guest, ...rest }) => {
           !isValidDate(lastInvoked) ||
           time.diff(moment(lastInvoked)) >= lastInvokedThrottle
         ) {
-          writeStorage(lastInvokedKey, time.format());
+          writeLocalStorage(time);
 
           log
             .doc(time.format("YYYY-MM"))
@@ -61,7 +64,7 @@ const PrivateRoute = ({ component, guest, ...rest }) => {
       } catch (err) {
         console.log("Local storage error.");
         console.log(err);
-        writeStorage(lastInvokedKey, time.format());
+        writeLocalStorage(time);
       }
     }
   };
@@ -73,14 +76,14 @@ const PrivateRoute = ({ component, guest, ...rest }) => {
         if (guestUser) {
           if (component === "user") {
             return <Redirect to="/login/user" />;
-          } else {
+          } else if (component === "guest") {
             logLogin(currentUser.email);
             return <Guest {...routeProps} />;
           }
         } else {
           if (component === "guest") {
             return <Redirect to="/user" />;
-          } else {
+          } else if (component === "user") {
             logLogin(currentUser.email);
             return <User {...routeProps} />;
           }

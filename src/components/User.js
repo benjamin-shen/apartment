@@ -26,8 +26,7 @@ const User = () => {
       <Container>
         <h1>
           User
-          {(currentUser.displayName && ": " + currentUser.displayName) ||
-            (currentUser.email && ": " + currentUser.email)}
+          {info && ": " + info}
         </h1>
         <Log type="doorbell" />
         <Log type="login" />

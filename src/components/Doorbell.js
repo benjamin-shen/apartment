@@ -35,9 +35,12 @@ const Doorbell = () => {
     };
   }, []);
 
-  const [lastInvoked] = useLocalStorage(lastInvokedKey);
-
   const { currentUser } = useContext(AuthContext);
+  const info = currentUser && currentUser.email && ":" + currentUser.email;
+
+  const [lastInvoked] = useLocalStorage(lastInvokedKey + info);
+  const writeLocalStorage = (time) =>
+    writeStorage(lastInvokedKey + info, time.format());
 
   const ring = () => {
     console.log("Rang doorbell.");
@@ -50,7 +53,7 @@ const Doorbell = () => {
         !isValidDate(lastInvoked) ||
         time.diff(moment(lastInvoked)) >= lastInvokedThrottle
       ) {
-        writeStorage(lastInvokedKey, time.format());
+        writeLocalStorage(time);
 
         ringDoorbell()
           .then(() => {
@@ -91,7 +94,7 @@ const Doorbell = () => {
     } catch (err) {
       console.log("Local storage error.");
       console.log(err);
-      writeStorage(lastInvokedKey, time.format());
+      writeLocalStorage(time);
     }
 
     setRang(true);

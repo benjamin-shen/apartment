@@ -14,14 +14,15 @@
 .user .log .table {
   margin: 0;
 }
-.user .log .email a {
+.user .log .header-text {
   text-decoration: none;
   color: #495057;
 }
-.user .log .email a:hover {
+.user .log .header-text:hover {
   color: black;
+  cursor: pointer;
 }
-.user .log .email img {
+.user .log .header img {
   vertical-align: baseline;
 }
 .user .log .individual-email {

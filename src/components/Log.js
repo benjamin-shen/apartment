@@ -17,24 +17,27 @@ const Log = ({ type }) => {
   const currentMonth = log.doc(currentTime.format("YYYY-MM"));
   const prevMonth = log.doc(prevMonthTime.format("YYYY-MM"));
 
-  currentMonth.get().then((doc) => {
-    if (!doc.exists) {
-      log.doc(currentTime.format("YYYY-MM")).set({
-        month: currentTime.format("M"),
-        year: currentTime.format("YYYY"),
-      });
-    }
-  });
-  prevMonth.get().then((doc) => {
-    if (!doc.exists) {
-      log.doc(prevMonthTime.format("YYYY-MM")).set({
-        month: prevMonthTime.format("M"),
-        year: prevMonthTime.format("YYYY"),
-      });
-    }
-  });
+  try {
+    currentMonth.get().then((doc) => {
+      if (!doc.exists) {
+        log.doc(currentTime.format("YYYY-MM")).set({
+          month: currentTime.format("M"),
+          year: currentTime.format("YYYY"),
+        });
+      }
+    });
+    prevMonth.get().then((doc) => {
+      if (!doc.exists) {
+        log.doc(prevMonthTime.format("YYYY-MM")).set({
+          month: prevMonthTime.format("M"),
+          year: prevMonthTime.format("YYYY"),
+        });
+      }
+    });
+  } catch (err) {
+    console.log(err);
+  }
 
-  const [expand, setExpand] = useState(false);
   const [fullLog, setFullLog] = useState([]);
 
   const [
@@ -62,6 +65,9 @@ const Log = ({ type }) => {
     else setFullLog(currentMonth_snapshot.docs.concat(prevMonth_snapshot.docs));
   }, [currentMonth_snapshot, prevMonth_snapshot]);
 
+  const [expand, setExpand] = useState(false);
+  const [descending, setDescending] = useState(true);
+
   const expandedRows = () => {
     const result = fullLog.map((doc) => {
       const time = doc.get("time");
@@ -75,7 +81,7 @@ const Log = ({ type }) => {
         </tr>
       );
     });
-    return result.length ? <>{result}</> : "";
+    return result.length ? <>{descending ? result : result.reverse()}</> : "";
   };
   const collapsedRows = () => {
     const collapsedData = {};
@@ -90,7 +96,7 @@ const Log = ({ type }) => {
       }
     });
     const collapsedDataArray = Object.entries(collapsedData);
-    collapsedDataArray.sort((a, b) => b[1] - a[1]);
+    collapsedDataArray.sort((a, b) => (descending ? b[1] - a[1] : a[1] - b[1]));
     const result = collapsedDataArray.map((entry) => {
       const count = entry[1];
       const user = entry[0];
@@ -124,16 +130,26 @@ const Log = ({ type }) => {
         variant="outline-dark"
         size="sm"
         className="log-button"
-        onClick={() => setExpand(!expand)}
+        onClick={() => {
+          setExpand(!expand);
+          setDescending(true);
+        }}
       >
         {expand ? "Collapse" : "Expand"}
       </Button>
       <table className="table table-bordered">
         <thead className="thead-light">
           <tr>
-            <th scope="col">{expand ? "Date" : "Frequency"}</th>
-            <th scope="col" className="email">
-              <a href={mailtoAll()}>
+            <th scope="col" className="header">
+              <span
+                className="header-text"
+                onClick={() => setDescending(!descending)}
+              >
+                {expand ? "Date" : "Frequency"}
+              </span>
+            </th>
+            <th scope="col" className="header">
+              <a className="header-text" href={mailtoAll()}>
                 Email <img src={mail} width="13" alt="Send email" />
               </a>
             </th>
