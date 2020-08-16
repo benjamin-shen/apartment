@@ -52,7 +52,7 @@ function Doorbell() {
       }
       if (
         !lastInvoked ||
-        time.diff(moment(lastInvoked), "minutes") >= lastInvokedThrottle
+        time.diff(moment(lastInvoked)) >= lastInvokedThrottle
       ) {
         writeStorage(lastInvokedKey, time.format());
 
