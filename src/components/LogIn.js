@@ -15,9 +15,9 @@ import "../styles/Login.css";
 
 const validate = app.functions().httpsCallable("validate");
 
-const LogIn = ({ history, guest }) => {
+const LogIn = ({ history, guestPage }) => {
   const [error, setError] = useState("");
-  const [login, setLogin] = useState(null);
+  const [signup, setSignup] = useState();
 
   const mountedRef = useRef(true);
   useEffect(() => {
@@ -38,7 +38,7 @@ const LogIn = ({ history, guest }) => {
       try {
         if (!user) throw Error("Missing email.");
         if (!pass) throw Error("Missing password.");
-        if (login) {
+        if (!signup) {
           await app.auth().signInWithEmailAndPassword(user, pass);
         } else {
           const valid = (await validate(pass)).data;
@@ -57,7 +57,7 @@ const LogIn = ({ history, guest }) => {
             throw Error("Incorrect guest password.");
           }
         }
-        history.push(guest ? "/guest" : "/user");
+        history.push(guestPage ? "/guest" : "/user");
       } catch (err) {
         setError("Error!");
         setTimeout(() => {
@@ -66,7 +66,7 @@ const LogIn = ({ history, guest }) => {
         }, 500);
       }
     },
-    [history, guest, login]
+    [history, guestPage, signup]
   );
 
   if (currentUser) {
@@ -79,7 +79,7 @@ const LogIn = ({ history, guest }) => {
         <Back />
       </Nav>
       <Container>
-        <h1>{guest ? "Guest" : "User"} Login</h1>
+        <h1>{guestPage ? "Guest" : "User"} Login</h1>
         <form onSubmit={handleLogin}>
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
@@ -89,7 +89,7 @@ const LogIn = ({ history, guest }) => {
               className="form-control"
               placeholder="Your email"
             />
-            {guest && (
+            {guestPage && (
               <small className="form-text text-muted">
                 We may email you for contact tracing purposes.
               </small>
@@ -101,24 +101,29 @@ const LogIn = ({ history, guest }) => {
               name="password"
               type="password"
               className="form-control"
-              placeholder={guest ? "Guest password" : "Your password"}
+              placeholder={guestPage ? "Guest password" : "Your password"}
             />
           </div>
           <p className="text-danger">{error}</p>
-          <Button type="submit" onClick={() => setLogin(true)}>
+          <Button
+            type="submit"
+            className="login-button"
+            onClick={() => setSignup(false)}
+          >
             Log In
           </Button>
-          {guest && (
+          {guestPage && (
             <Button
               variant="secondary"
               type="submit"
-              onClick={() => setLogin(false)}
+              className="login-button"
+              onClick={() => setSignup(true)}
             >
               Sign Up
             </Button>
           )}
         </form>
-      </Container>{" "}
+      </Container>
     </div>
   );
 };

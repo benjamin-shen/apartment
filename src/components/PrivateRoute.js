@@ -7,6 +7,7 @@ import app from "./base";
 import { AuthContext } from "./Auth";
 import User from "./User";
 import Guest from "./Guest";
+import Profile from "./Profile";
 
 moment.tz.setDefault("Americas/New_York");
 const isValidDate = (str) => {
@@ -21,7 +22,9 @@ const lastInvokedThrottle = 3600000;
 
 const log = app.firestore().collection("log");
 
-const PrivateRoute = ({ component, guest, ...rest }) => {
+const PrivateRoute = ({ path, ...rest }) => {
+  const guestPage = path.includes("/guest");
+
   const { currentUser, guestUser } = useContext(AuthContext);
   const info = currentUser && currentUser.email && ":" + currentUser.email;
 
@@ -30,7 +33,7 @@ const PrivateRoute = ({ component, guest, ...rest }) => {
     writeStorage(lastInvokedKey + info, time.format());
 
   if (!currentUser) {
-    return <Redirect to={guest ? "/login/guest" : "/login/user"} />;
+    return <Redirect to={guestPage ? "/guest/login" : "/user/login"} />;
   }
 
   if (!currentUser.emailVerified) {
@@ -74,18 +77,34 @@ const PrivateRoute = ({ component, guest, ...rest }) => {
       {...rest}
       render={(routeProps) => {
         if (guestUser) {
-          if (component === "user") {
-            return <Redirect to="/login/user" />;
-          } else if (component === "guest") {
-            logLogin(currentUser.email);
-            return <Guest {...routeProps} />;
+          switch (path) {
+            case "/user":
+            case "/user/profile":
+              return <Redirect to="/guest" />;
+            case "/guest":
+              logLogin(currentUser.email);
+              return <Guest {...routeProps} />;
+            case "/guest/profile":
+              return <Profile {...routeProps} />;
+            case "/profile":
+              return <Redirect to="/guest/profile" />;
+            default:
+              return <Redirect to="/guest" />;
           }
         } else {
-          if (component === "guest") {
-            return <Guest {...routeProps} />;
-          } else if (component === "user") {
-            logLogin(currentUser.email);
-            return <User {...routeProps} />;
+          switch (path) {
+            case "/guest":
+              return <Guest {...routeProps} />;
+            case "/user":
+              logLogin(currentUser.email);
+              return <User {...routeProps} />;
+            case "/guest/profile":
+            case "/profile":
+              return <Redirect to="/user/profile" />;
+            case "/user/profile":
+              return <Profile {...routeProps} />;
+            default:
+              return <Redirect to="/user" />;
           }
         }
       }}

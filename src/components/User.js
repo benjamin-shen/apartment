@@ -6,7 +6,7 @@ import { AuthContext } from "./Auth";
 import Nav from "./Nav";
 import Back from "./Back";
 import View from "./View";
-import SignOut from "./SignOut";
+import ProfileButton from "./ProfileButton";
 import Log from "./Log";
 import "../styles/User.css";
 
@@ -27,7 +27,7 @@ const User = () => {
       <Nav>
         <Back />
         <View text="Guest View" link="/guest" />
-        <SignOut />
+        <ProfileButton link="/user/profile" />
       </Nav>
       <Container>
         <h1>

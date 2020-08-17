@@ -55,12 +55,12 @@ function Home() {
           ) : (
             <div className="login-buttons">
               <Button variant="outline-dark" size="sm" className="login-button">
-                <Link to="/login/guest">
+                <Link to="/guest/login">
                   <h2>Guest Log In</h2>
                 </Link>
               </Button>
               <Button variant="outline-dark" size="sm" className="login-button">
-                <Link to="/login/user">
+                <Link to="/user/login">
                   <h2>House Log In</h2>
                 </Link>
               </Button>

@@ -15,7 +15,7 @@ This project is open-source. Forks and contributions are welcomed.
 
 ### Firebase
 
-This section is essential for setting up the app by yourself. Firebase is used for its hosting, authentication, cloud functions, and cloud database.
+This section is essential for setting up the app by yourself. Firebase is used for its hosting, authentication, cloud functions, and cloud firestore.
 
 1. Create a new Firebase project. Upgrade the project to the Blaze plan to use Cloud functions.
 2. Work in the top-level folder of the cloned repo. Log in to your newly created project using the [Firebase CLI](https://firebase.google.com/docs/cli). Run `firebase use --add`, select your project id, and name it "default".

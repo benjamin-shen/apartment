@@ -38,17 +38,20 @@ const App = () => {
             <Route exact path="/" component={Home} />
             <Route
               exact
-              path="/login/user"
-              render={(props) => <Login {...props} guest={false} />}
+              path="/user/login"
+              render={(props) => <Login {...props} />}
             />
             <Route
               exact
-              path="/login/guest"
-              render={(props) => <Login {...props} guest={true} />}
+              path="/guest/login"
+              render={(props) => <Login {...props} guestPage />}
             />
             <Route exact path="/verifyEmail" component={VerifyEmail} />
-            <PrivateRoute exact path="/user" component="user" guest={false} />
-            <PrivateRoute exact path="/guest" component="guest" guest={true} />
+            <PrivateRoute exact path="/user" />
+            <PrivateRoute exact path="/guest" />
+            <PrivateRoute exact path="/profile"/>
+            <PrivateRoute exact path="/user/profile" />
+            <PrivateRoute exact path="/guest/profile"/>
             <Route component={PageNotFound} />
           </Switch>
         </div>

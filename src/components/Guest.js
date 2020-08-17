@@ -4,7 +4,7 @@ import { AuthContext } from "./Auth";
 import Nav from "./Nav";
 import Back from "./Back";
 import View from "./View";
-import SignOut from "./SignOut";
+import ProfileButton from "./ProfileButton";
 import Wifi from "./Wifi";
 import "../styles/Guest.css";
 
@@ -17,7 +17,7 @@ const Guest = () => {
       <Nav>
         <Back />
         {!guestUser && <View text="Back to User Page" link="/user" />}
-        <SignOut />
+        <ProfileButton link={guestUser ? "/guest/profile" : "/user/profile"} />
       </Nav>
       <Container>
         <h1>
