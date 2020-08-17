@@ -27,6 +27,7 @@ const getUids = () => {
     .then((doc) => {
       const data = doc.exists && doc.data();
       if (data && data.uids) return data.uids;
+      return [];
     })
     .catch((err) => {
       console.log(err);

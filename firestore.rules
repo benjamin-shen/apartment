@@ -1,14 +1,15 @@
+rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     function emailVerified() {
     	return request.auth != null && request.auth.token.email_verified;
     }
     
-    match /log/{month} {
+    match /log/{document=**} {
       allow read, write: if emailVerified();
     }
     
-    match /app/info {
+    match /app/info/{collection=**} {
     	allow read: if emailVerified();
     }
   }
