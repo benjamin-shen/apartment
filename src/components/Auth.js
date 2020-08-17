@@ -6,12 +6,12 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [error, setError] = useState();
 
-  const [uids, setUids] = useState(new Set());
+  const [uids, setUids] = useState();
   const [authorizing, setAuthorizing] = useState(false);
   const [shouldGetUids, setShouldGetUids] = useState(false);
 
-  const [currentUser, setCurrentUser] = useState(null);
-  const [guestUser, setGuestUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState();
+  const [guestUser, setGuestUser] = useState();
   const [pending, setPending] = useState(true);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ export const AuthProvider = ({ children }) => {
           .functions()
           .httpsCallable("getUids")()
           .then(({ data: uids }) => {
-            uids && setUids(new Set(uids));
+            uids.length && setUids(new Set(uids));
             setAuthorizing(false);
           })
           .catch((err) => {
@@ -41,7 +41,7 @@ export const AuthProvider = ({ children }) => {
         setShouldGetUids(true);
       }
       setCurrentUser(user);
-      setGuestUser(user && !uids.has(user.uid));
+      setGuestUser(user && uids && !uids.has(user.uid));
       setPending(false);
     });
   }, [uids]);

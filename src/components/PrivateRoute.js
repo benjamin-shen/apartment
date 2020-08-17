@@ -82,7 +82,7 @@ const PrivateRoute = ({ component, guest, ...rest }) => {
           }
         } else {
           if (component === "guest") {
-            return <Redirect to="/user" />;
+            return <Guest {...routeProps} />;
           } else if (component === "user") {
             logLogin(currentUser.email);
             return <User {...routeProps} />;
