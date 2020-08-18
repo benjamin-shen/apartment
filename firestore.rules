@@ -4,13 +4,25 @@ service cloud.firestore {
     function emailVerified() {
     	return request.auth != null && request.auth.token.email_verified;
     }
+    function isUser() { // doesn't work
+    	return request.auth.uid in get(/databases/{database}/documents/app/info).data.uids;
+    }
     
     match /log/{document=**} {
-      allow read, write: if emailVerified();
+      allow read: if emailVerified() && true; // isUser()
+      allow write: if emailVerified();
+    }
+    match /log/{month}/doorbell/{document=**} {
+      allow write: if emailVerified(); // add throttling
     }
     
     match /app/info/{collection=**} {
-    	allow read: if emailVerified();
+    	allow read;
+      allow write: if emailVerified() && isUser();
+    }
+    
+    match /app/private/{collection=**} {
+    	allow read, write: if emailVerified() && isUser();
     }
   }
 }

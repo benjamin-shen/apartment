@@ -21,7 +21,6 @@ const lastInvokedThrottle = 60000;
 
 const log = app.firestore().collection("log");
 const ringDoorbell = app.functions().httpsCallable("ringDoorbell");
-const logDoorbell = app.functions().httpsCallable("logDoorbell");
 
 const Doorbell = () => {
   const [playSound] = useSound(dingdong);
@@ -36,7 +35,8 @@ const Doorbell = () => {
   }, []);
 
   const { currentUser } = useContext(AuthContext);
-  const info = currentUser && currentUser.email && ":" + currentUser.email;
+  const info =
+    (currentUser && currentUser.email && ":" + currentUser.email) || "";
 
   const [lastInvoked] = useLocalStorage(lastInvokedKey + info);
   const writeLocalStorage = (time) =>
@@ -64,11 +64,15 @@ const Doorbell = () => {
             console.log(err);
           });
 
+        const timestamp = new Date(time);
         if (currentUser && currentUser.emailVerified) {
           log
             .doc(month)
             .collection("doorbell")
-            .add({ user: currentUser.email, time: new Date(time) })
+            .add({ user: currentUser.email, time: timestamp })
+            .then(() => {
+              log.doc(month).update({ lastUpdatedDoorbell: timestamp });
+            })
             .then(() => {
               console.log("Logged doorbell.");
             })
@@ -77,7 +81,13 @@ const Doorbell = () => {
               console.log(err);
             });
         } else {
-          logDoorbell(month)
+          log
+            .doc(month)
+            .collection("doorbell")
+            .add({ time: timestamp })
+            .then(() => {
+              log.doc(month).update({ lastUpdatedDoorbell: timestamp });
+            })
             .then(() => {
               if (currentUser) {
                 console.log("Logged unverified doorbell.");

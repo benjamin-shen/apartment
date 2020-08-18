@@ -18,11 +18,11 @@ admin.initializeApp({
   databaseURL,
 });
 
-const getUids = () => {
+const getUids = async () => {
   return admin
     .firestore()
     .collection("app")
-    .doc("private")
+    .doc("info")
     .get()
     .then((doc) => {
       const data = doc.exists && doc.data();
@@ -50,18 +50,6 @@ exports.ringDoorbell = functions.https.onCall((_, { auth }) => {
       auth && auth.token.email_verified,
       moment().tz("America/New_York")
     )
-    .catch((err) => {
-      console.log(err);
-    });
-});
-
-exports.logDoorbell = functions.https.onCall((month) => {
-  return admin
-    .firestore()
-    .collection("log")
-    .doc(month)
-    .collection("doorbell")
-    .add({ time: new Date() })
     .catch((err) => {
       console.log(err);
     });
