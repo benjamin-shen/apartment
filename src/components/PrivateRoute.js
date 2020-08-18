@@ -33,11 +33,11 @@ const PrivateRoute = ({ path, ...rest }) => {
     writeStorage(lastInvokedKey + info, time.format());
 
   if (!currentUser) {
-    return <Redirect to={guestPage ? "/guest/login" : "/user/login"} />;
+    return <Redirect to={(guestPage ? "/guest" : "/user") + "/login"} />;
   }
 
   if (!currentUser.emailVerified) {
-    return <Redirect to={"/verifyEmail"} />;
+    return <Redirect to="/verifyEmail" />;
   }
 
   const logLogin = (user) => {
@@ -79,8 +79,9 @@ const PrivateRoute = ({ path, ...rest }) => {
         if (guestUser) {
           switch (path) {
             case "/user":
-            case "/user/profile":
               return <Redirect to="/guest" />;
+            case "/user/profile":
+              return <Redirect to="/guest/profile" />;
             case "/guest":
               logLogin(currentUser.email);
               return <Guest {...routeProps} />;

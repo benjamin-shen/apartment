@@ -143,7 +143,9 @@ const Log = ({ type }) => {
             <th scope="col" className="header">
               <span
                 className="header-text"
-                onClick={() => setDescending(!descending)}
+                onClick={() => {
+                  setDescending(!descending);
+                }}
               >
                 {expand ? "Date" : "Frequency"}
               </span>

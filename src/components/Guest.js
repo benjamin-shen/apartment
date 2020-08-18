@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Container } from "react-bootstrap";
+import { Helmet } from "react-helmet";
 import { AuthContext } from "./Auth";
 import Nav from "./Nav";
 import Back from "./Back";
@@ -14,10 +15,14 @@ const Guest = () => {
 
   return (
     <div className="guest">
+      <Helmet>
+        {info && <title>{info}</title>}
+        {info && <meta name="title" content={info} />}
+      </Helmet>
       <Nav>
         <Back />
         {!guestUser && <View text="Back to User Page" link="/user" />}
-        <ProfileButton link={guestUser ? "/guest/profile" : "/user/profile"} />
+        <ProfileButton link={(guestUser ? "/guest" : "/user") + "/profile"} />
       </Nav>
       <Container>
         <h1>

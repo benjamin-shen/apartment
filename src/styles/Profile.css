@@ -1,3 +1,24 @@
 .profile h1 {
   margin-top: 20px;
 }
+.profile h2 {
+  word-break: break-word;
+}
+.profile .action-button {
+  margin: 10px;
+}
+.profile form {
+  margin: 10px 0;
+}
+.profile input {
+  min-width: 50%;
+  margin-left: 20px;
+  margin-right: 20px !important;
+}
+
+@media (max-width: 450px) {
+  .profile input {
+    margin-left: 10px;
+    margin-right: 10px !important;
+  }
+}

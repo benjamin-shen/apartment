@@ -8,7 +8,9 @@ const SignOut = () => {
     <Button
       variant="danger"
       className="signout float-right"
-      onClick={() => app.auth().signOut()}
+      onClick={() => {
+        app.auth().signOut();
+      }}
     >
       Sign Out
     </Button>

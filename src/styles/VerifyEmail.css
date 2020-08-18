@@ -1,7 +1,5 @@
-.user p {
-  margin: 20px;
+.user h2 {
   word-break: break-word;
-  font-size: 1.4em;
 }
 .user .action-button {
   margin: 10px;

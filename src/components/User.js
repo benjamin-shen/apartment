@@ -20,7 +20,6 @@ const User = () => {
   return (
     <div className="user">
       <Helmet>
-        <meta charSet="utf-8" />
         {info && <title>{info}</title>}
         {info && <meta name="title" content={info} />}
       </Helmet>

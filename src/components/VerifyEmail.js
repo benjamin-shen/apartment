@@ -1,36 +1,46 @@
 import React, { useContext, useState } from "react";
-import { withRouter, Redirect, useLocation } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { Container, Button } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { AuthContext } from "./Auth";
 import Nav from "./Nav";
 import Back from "./Back";
 import "../styles/VerifyEmail.css";
+import app from "./base";
 
-const VerifyEmail = ({ history }) => {
-  const location = useLocation();
-
+const VerifyEmail = () => {
   const [emailSending, setEmailSending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
-  const [error, setError] = useState();
+  const [error, setError] = useState("");
 
-  const { currentUser } = useContext(AuthContext);
+  const { currentUser, guestUser } = useContext(AuthContext);
 
-  if (!currentUser || (currentUser.reload() && currentUser.emailVerified)) {
-    return <Redirect to="/user" />;
+  if (!currentUser) {
+    return <Redirect to="/" />;
+  }
+
+  if (currentUser.emailVerified) {
+    return <Redirect to={guestUser ? "/guest" : "/user"} />;
   }
 
   const reload = () => {
-    currentUser
-      .reload()
-      .then(() => {
-        if (currentUser.emailVerified) history.push(location.pathname);
-      })
-      .catch((err) => {
-        console.log(err);
-        setError(err.message);
-      });
+    if (!currentUser.emailVerified) {
+      currentUser
+        .reload()
+        .then(() => {
+          if (currentUser.emailVerified) {
+            app.auth().signOut();
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setError(err.message);
+        });
+    }
   };
+  setInterval(() => {
+    reload();
+  }, 1000);
 
   const sendVerificationEmail = () => {
     setEmailSending(true);
@@ -40,7 +50,7 @@ const VerifyEmail = ({ history }) => {
       .then(() => {
         setEmailSending(false);
         setEmailSent(true);
-        setError();
+        setError("");
       })
       .catch((err) => {
         console.log(err);
@@ -53,7 +63,6 @@ const VerifyEmail = ({ history }) => {
   return (
     <div className="user">
       <Helmet>
-        <meta charSet="utf-8" />
         {info && <title>{info}</title>}
         {info && <meta name="title" content={info} />}
       </Helmet>
@@ -61,8 +70,8 @@ const VerifyEmail = ({ history }) => {
         <Back />
       </Nav>
       <Container>
-        <h1>Please verify your email and reload the page.</h1>
-        <p>{currentUser.email}</p>
+        <h1>Please verify your email.</h1>
+        <h2>{currentUser.email}</h2>
         <Button
           size="lg"
           variant={emailSent ? "warning" : "primary"}
@@ -70,14 +79,6 @@ const VerifyEmail = ({ history }) => {
           className="action-button"
         >
           Resend Verification Email
-        </Button>
-        <Button
-          size="lg"
-          variant="success"
-          onClick={reload}
-          className="action-button"
-        >
-          I have verified!
         </Button>
         {error ? (
           <p className="text-danger">Error: {error}</p>
@@ -96,4 +97,4 @@ const VerifyEmail = ({ history }) => {
   );
 };
 
-export default withRouter(VerifyEmail);
+export default VerifyEmail;

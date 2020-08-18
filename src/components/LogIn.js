@@ -101,14 +101,16 @@ const LogIn = ({ history, guestPage }) => {
               name="password"
               type="password"
               className="form-control"
-              placeholder={guestPage ? "Guest password" : "Your password"}
+              placeholder={(guestPage ? "Guest" : "Your") + " password"}
             />
           </div>
-          <p className="text-danger">{error}</p>
+          {error && <p className="text-danger">{error}</p>}
           <Button
             type="submit"
             className="login-button"
-            onClick={() => setSignup(false)}
+            onClick={() => {
+              setSignup(false);
+            }}
           >
             Log In
           </Button>
@@ -117,7 +119,9 @@ const LogIn = ({ history, guestPage }) => {
               variant="secondary"
               type="submit"
               className="login-button"
-              onClick={() => setSignup(true)}
+              onClick={() => {
+                setSignup(true);
+              }}
             >
               Sign Up
             </Button>

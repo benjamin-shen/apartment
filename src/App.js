@@ -36,22 +36,18 @@ const App = () => {
         <div className="App">
           <Switch>
             <Route exact path="/" component={Home} />
-            <Route
-              exact
-              path="/user/login"
-              render={(props) => <Login {...props} />}
-            />
+            <Route exact path="/user/login" component={Login} />
             <Route
               exact
               path="/guest/login"
-              render={(props) => <Login {...props} guestPage />}
+              render={() => <Login guestPage />}
             />
             <Route exact path="/verifyEmail" component={VerifyEmail} />
             <PrivateRoute exact path="/user" />
             <PrivateRoute exact path="/guest" />
-            <PrivateRoute exact path="/profile"/>
+            <PrivateRoute exact path="/profile" />
             <PrivateRoute exact path="/user/profile" />
-            <PrivateRoute exact path="/guest/profile"/>
+            <PrivateRoute exact path="/guest/profile" />
             <Route component={PageNotFound} />
           </Switch>
         </div>
