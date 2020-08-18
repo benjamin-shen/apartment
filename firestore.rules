@@ -4,16 +4,21 @@ service cloud.firestore {
     function emailVerified() {
     	return request.auth != null && request.auth.token.email_verified;
     }
-    function isUser() { // doesn't work
-    	return request.auth.uid in get(/databases/{database}/documents/app/info).data.uids;
+    function isUser() {
+    	return request.auth.uid in get(/databases/$(database)/documents/app/info).data.uids;
+    }
+    function notThrottled(doc) {
+      return request.time >= get(/databases/$(database)/documents/log/$(doc)).data.lastUpdatedDoorbell + duration.value(1, 'm');
     }
     
     match /log/{document=**} {
-      allow read: if emailVerified() && true; // isUser()
-      allow write: if emailVerified();
+      allow read: if emailVerified() && isUser();
+    }
+    match /log/{month}/{collection=**} {
+      allow write: if emailVerified() || notThrottled(month) == false;
     }
     match /log/{month}/doorbell/{document=**} {
-      allow write: if emailVerified(); // add throttling
+      allow write: if notThrottled(month) == false;
     }
     
     match /app/info/{collection=**} {

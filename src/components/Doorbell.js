@@ -71,7 +71,13 @@ const Doorbell = () => {
             .collection("doorbell")
             .add({ user: currentUser.email, time: timestamp })
             .then(() => {
-              log.doc(month).update({ lastUpdatedDoorbell: timestamp });
+              log
+                .doc(month)
+                .update({ lastUpdatedDoorbell: timestamp })
+                .catch((err) => {
+                  console.log("Couldn't update timestamp.");
+                  console.log(err);
+                });
             })
             .then(() => {
               console.log("Logged doorbell.");
@@ -86,7 +92,13 @@ const Doorbell = () => {
             .collection("doorbell")
             .add({ time: timestamp })
             .then(() => {
-              log.doc(month).update({ lastUpdatedDoorbell: timestamp });
+              log
+                .doc(month)
+                .update({ lastUpdatedDoorbell: timestamp })
+                .catch((err) => {
+                  console.log("Couldn't update timestamp.");
+                  console.log(err);
+                });
             })
             .then(() => {
               if (currentUser) {
