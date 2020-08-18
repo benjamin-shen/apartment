@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import app from "./base";
 import "../styles/Wifi.css";
 
@@ -9,17 +9,22 @@ const Wifi = () => {
   const [ssid, setSSID] = useState();
   const [passcode, setPasscode] = useState();
 
-  try {
-    info.get().then((doc) => {
-      if (doc.exists) {
-        const data = doc.data();
-        setSSID(data.wifiSSID);
-        setPasscode(data.wifiPasscode);
-      }
-    });
-  } catch (err) {
-    console.log(err);
-  }
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    try {
+      info.get().then((doc) => {
+        if (doc.exists) {
+          const data = doc.data();
+          setSSID(data.wifiSSID);
+          setPasscode(data.wifiPasscode);
+        }
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    mountedRef.current = false;
+  }, []);
 
   return ssid ? (
     <div className="wifi bg-light">

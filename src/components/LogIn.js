@@ -49,7 +49,7 @@ const LogIn = ({ guestPage }) => {
             app
               .auth()
               .onAuthStateChanged((user) => {
-                user.sendEmailVerification();
+                user && user.sendEmailVerification();
                 console.log("Sent initial verification email.");
               })
               .catch((err) => {

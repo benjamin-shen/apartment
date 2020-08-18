@@ -13,16 +13,14 @@ service cloud.firestore {
     
     match /log/{document=**} {
       allow read: if emailVerified() && isUser();
+      allow create: if emailVerified();
     }
     match /log/{month}/{collection=**} {
-      allow write: if emailVerified() || notThrottled(month) == false;
-    }
-    match /log/{month}/doorbell/{document=**} {
-      allow write: if notThrottled(month) == false;
+      allow write: if notThrottled(month);
     }
     
     match /app/info/{collection=**} {
-    	allow read;
+    	allow read: if emailVerified();
       allow write: if emailVerified() && isUser();
     }
     

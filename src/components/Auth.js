@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [shouldGetUids, setShouldGetUids] = useState(false);
 
   const [currentUser, setCurrentUser] = useState();
-  const [guestUser, setGuestUser] = useState();
+  const [guestUser, setGuestUser] = useState(true);
   const [pending, setPending] = useState(true);
 
   useEffect(() => {
@@ -42,9 +42,11 @@ export const AuthProvider = ({ children }) => {
       }
       setCurrentUser(user);
       setGuestUser(user && uids && !uids.has(user.uid));
-      setPending(false);
+      if (guestUser != null) {
+        setPending(false);
+      }
     });
-  }, [uids]);
+  }, [uids, guestUser]);
 
   if (error) {
     return <p className="message">There was an error.</p>;

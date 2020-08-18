@@ -13,7 +13,7 @@ import "../styles/User.css";
 const User = () => {
   const { currentUser, guestUser } = useContext(AuthContext);
   if (!currentUser || guestUser) {
-    return <Redirect to={guestUser ? "/guest" : "/"} />;
+    return <Redirect to="/guest" />;
   }
   const info = currentUser.displayName || currentUser.email;
 
