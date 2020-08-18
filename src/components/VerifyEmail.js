@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Redirect } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { Container, Button } from "react-bootstrap";
 import { Helmet } from "react-helmet";
 import { AuthContext } from "./Auth";
@@ -9,6 +9,8 @@ import "../styles/VerifyEmail.css";
 import app from "./base";
 
 const VerifyEmail = () => {
+  const history = useHistory();
+
   const [emailSending, setEmailSending] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const [error, setError] = useState("");
@@ -30,6 +32,7 @@ const VerifyEmail = () => {
         .then(() => {
           if (currentUser.emailVerified) {
             app.auth().signOut();
+            history.push((guestUser ? "/guest" : "/user") + "/login");
           }
         })
         .catch((err) => {

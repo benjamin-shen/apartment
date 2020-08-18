@@ -6,7 +6,7 @@ import React, {
   useCallback,
 } from "react";
 import { Container, Button } from "react-bootstrap";
-import { withRouter, Redirect } from "react-router-dom";
+import { useHistory, Redirect } from "react-router-dom";
 import { AuthContext } from "./Auth";
 import app from "./base";
 import Nav from "./Nav";
@@ -15,7 +15,9 @@ import "../styles/Login.css";
 
 const validate = app.functions().httpsCallable("validate");
 
-const LogIn = ({ history, guestPage }) => {
+const LogIn = ({ guestPage }) => {
+  const history = useHistory();
+
   const [error, setError] = useState("");
   const [signup, setSignup] = useState();
 
@@ -132,4 +134,4 @@ const LogIn = ({ history, guestPage }) => {
   );
 };
 
-export default withRouter(LogIn);
+export default LogIn;
