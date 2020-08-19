@@ -40,6 +40,10 @@ const PrivateRoute = ({ path, ...rest }) => {
     return <Redirect to="/verifyEmail" />;
   }
 
+  if (guestUser == null) {
+    return <p className="message">Loading...</p>;
+  }
+
   const logLogin = (user) => {
     if (user) {
       const time = moment();

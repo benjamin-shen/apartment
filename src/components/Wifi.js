@@ -12,6 +12,7 @@ const Wifi = () => {
   const mountedRef = useRef(true);
 
   useEffect(() => {
+    if (!mountedRef.current) return null;
     try {
       info.get().then((doc) => {
         if (doc.exists) {

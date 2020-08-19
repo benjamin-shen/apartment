@@ -42,9 +42,7 @@ export const AuthProvider = ({ children }) => {
       }
       setCurrentUser(user);
       setGuestUser(user && uids && !uids.has(user.uid));
-      if (guestUser != null) {
-        setPending(false);
-      }
+      setPending(false);
     });
   }, [uids, guestUser]);
 
