@@ -9,6 +9,9 @@
 .message {
   margin-left: 5px;
 }
+.cursor-default {
+  cursor: default;
+}
 
 @media (max-width: 450px) {
   h1 {

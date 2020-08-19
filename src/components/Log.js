@@ -17,27 +17,6 @@ const Log = ({ type }) => {
   const currentMonth = log.doc(currentTime.format("YYYY-MM"));
   const prevMonth = log.doc(prevMonthTime.format("YYYY-MM"));
 
-  try {
-    currentMonth.get().then((doc) => {
-      if (!doc.exists) {
-        log.doc(currentTime.format("YYYY-MM")).set({
-          month: currentTime.format("M"),
-          year: currentTime.format("YYYY"),
-        });
-      }
-    });
-    prevMonth.get().then((doc) => {
-      if (!doc.exists) {
-        log.doc(prevMonthTime.format("YYYY-MM")).set({
-          month: prevMonthTime.format("M"),
-          year: prevMonthTime.format("YYYY"),
-        });
-      }
-    });
-  } catch (err) {
-    console.log(err);
-  }
-
   const [fullLog, setFullLog] = useState([]);
 
   const [
@@ -72,9 +51,15 @@ const Log = ({ type }) => {
     const result = fullLog.map((doc) => {
       const time = doc.get("time");
       const user = doc.get("user");
+      const momentTime = time && moment(time.toDate());
       return (
         <tr key={doc.id}>
-          <td>{time && moment(time.toDate()).calendar()}</td>
+          <td
+            title={momentTime && momentTime.format("LLLL")}
+            className="cursor-default"
+          >
+            {momentTime && momentTime.calendar()}
+          </td>
           <td className="individual-email">
             {user ? <a href={"mailto:" + user}>{user}</a> : "anonymous"}
           </td>
@@ -147,12 +132,12 @@ const Log = ({ type }) => {
                   setDescending(!descending);
                 }}
               >
-                {expand ? "Date" : "Frequency"}
+                {expand ? "Time" : "Frequency"}
               </span>
             </th>
             <th scope="col" className="header">
               <a className="header-text" href={mailtoAll()}>
-                Email <img src={mail} width="13" alt="Send email" />
+                Email <img src={mail} width="13" alt="Send email to all." />
               </a>
             </th>
           </tr>
@@ -160,7 +145,7 @@ const Log = ({ type }) => {
         <tbody>
           {currentMonth_error && (
             <tr>
-              <td colSpan="2">
+              <td colSpan="2" className="alert alert-light">
                 There was an error loading this month's {type.toLowerCase()}{" "}
                 data.
               </td>
@@ -168,7 +153,7 @@ const Log = ({ type }) => {
           )}
           {prevMonth_error && (
             <tr>
-              <td colSpan="2">
+              <td colSpan="2" className="alert alert-light">
                 There was an error loading last month's {type.toLowerCase()}{" "}
                 data.
               </td>
@@ -176,14 +161,14 @@ const Log = ({ type }) => {
           )}
           {currentMonth_loading && (
             <tr>
-              <td colSpan="2">
+              <td colSpan="2" className="alert alert-light">
                 Loading this month's {type.toLowerCase()} data.
               </td>
             </tr>
           )}
           {prevMonth_loading && (
             <tr>
-              <td colSpan="2">
+              <td colSpan="2" className="alert alert-light">
                 Loading last month's {type.toLowerCase()} data.
               </td>
             </tr>
