@@ -15,6 +15,7 @@
 }
 .notes td {
   text-align: left;
+  word-break: break-word;
 }
 .notes .add-note {
   border-radius: 0 0 5px 5px;
@@ -29,4 +30,7 @@
 }
 .notes .add-note-btn {
   margin-left: 10px;
+}
+.notes .delete-note {
+  cursor: pointer;
 }

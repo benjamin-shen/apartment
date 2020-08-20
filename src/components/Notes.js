@@ -7,6 +7,7 @@ import app from "./base";
 import { AuthContext } from "./Auth";
 import "../styles/Notes.css";
 import plus from "../assets/icons/plus.svg";
+import x from "../assets/icons/x.svg";
 
 moment.tz.setDefault("Americas/New_York");
 
@@ -78,6 +79,15 @@ const Notes = ({ type, document }) => {
       return (
         <tr key={doc.id}>
           <td title={momentTime && "Created " + momentTime.format("llll")}>
+            {!guestUser && (
+              <img
+                src={x}
+                width="22"
+                alt="Delete note."
+                className="float-right delete-note"
+                onClick={() => deleteNote(doc.id)}
+              />
+            )}
             {value}
           </td>
         </tr>
@@ -94,7 +104,6 @@ const Notes = ({ type, document }) => {
   }, []);
 
   const addNote = (note) => {
-    setMessage("Adding note...");
     if (note) {
       collection
         .add({
@@ -118,6 +127,18 @@ const Notes = ({ type, document }) => {
         setMessage("");
       }, 1000);
     }
+  };
+  const deleteNote = (id) => {
+    collection
+      .doc(id)
+      .delete()
+      .catch((err) => {
+        setMessage("Error!");
+        setTimeout(() => {
+          if (!mountedRef.current) return null;
+          setMessage(err.message);
+        }, 500);
+      });
   };
 
   return (
