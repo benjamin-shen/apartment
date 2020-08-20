@@ -10,6 +10,11 @@
 .notes p {
   margin-bottom: 0;
 }
+.notes .notes-button {
+  margin: 0;
+  float: right;
+  border-radius: 5px !important;
+}
 .notes .table {
   margin: 0;
 }

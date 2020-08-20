@@ -8,7 +8,7 @@ const Show = ({ text, children }) => {
   return (
     <div>
       {show ? children :<Button
-        variant="outline-dark"
+        variant="outline-success"
         className="show"
         onClick={() => {
           setShow(true);

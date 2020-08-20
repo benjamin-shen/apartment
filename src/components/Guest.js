@@ -7,7 +7,6 @@ import Back from "./Back";
 import View from "./View";
 import ProfileButton from "./ProfileButton";
 import Show from "./Show";
-import Doorbell from "./Doorbell";
 import Notes from "./Notes";
 import Wifi from "./Wifi";
 import "../styles/Guest.css";
@@ -36,7 +35,6 @@ const Guest = () => {
         <Show text="Show Guest Wifi">
           <Wifi />
         </Show>
-        <Doorbell />
       </Container>
     </div>
   );

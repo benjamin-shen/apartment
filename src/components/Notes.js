@@ -56,6 +56,7 @@ const Notes = ({ type, document }) => {
 
   const { guestUser } = useContext(AuthContext);
 
+  const [editing, setEditing] = useState(false);
   const [notes, setNotes] = useState([]);
   const [addingNote, setAddingNote] = useState(false);
   const [message, setMessage] = useState("");
@@ -81,7 +82,7 @@ const Notes = ({ type, document }) => {
       return (
         <tr key={doc.id}>
           <td title={momentTime && "Created " + momentTime.format("llll")}>
-            {!guestUser && (
+            {editing && !guestUser && (
               <img
                 src={x}
                 width="22"
@@ -154,6 +155,19 @@ const Notes = ({ type, document }) => {
   return (
     <div className="notes bg-light">
       <h2>{type && type.charAt(0).toUpperCase() + type.slice(1) + " "}Notes</h2>
+      {!guestUser && (
+        <Button
+          variant={editing ? "dark" : "outline-dark"}
+          size="sm"
+          className="notes-button"
+          onClick={() => {
+            setEditing(!editing);
+            setAddingNote(false);
+          }}
+        >
+          {editing ? "Done" : "Edit"}
+        </Button>
+      )}
       <table className="table">
         <tbody>
           {error && (
@@ -176,7 +190,7 @@ const Notes = ({ type, document }) => {
                 </td>
               </tr>
             ))}
-          {!guestUser && (
+          {editing && !guestUser && (
             <tr>
               {addingNote ? (
                 <td>
