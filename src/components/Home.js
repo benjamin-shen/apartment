@@ -2,33 +2,27 @@ import React, { useContext } from "react";
 import { Container, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { AuthContext } from "./Auth";
-import Doorbell from "./Doorbell";
 import SignOut from "./SignOut";
+import Doorbell from "./Doorbell";
 import "../styles/Home.css";
 
 const address = require("../env.json").app.address;
 
 function Home() {
   const { currentUser, guestUser } = useContext(AuthContext);
-  // TODO option to add name
-  // currentUser.updateProfile({displayName: "DISPLAY_NAME_HERE"})
 
   return (
     <div className="home">
       <Container>
-        <h1>
-          {address && (
-            <div>
-              Welcome to<span className="d-md"> </span>
-              <br className="d-md-none" />
-              <span className="address">{address}</span>
-            </div>
-          )}
-        </h1>
+        {address && (
+          <h1>
+            Welcome to<span className="d-md"> </span>
+            <br className="d-md-none" />
+            <span className="address">{address}</span>
+          </h1>
+        )}
         <main>
-          <div className="doorbell-button">
-            <Doorbell />
-          </div>
+          <Doorbell />
 
           {currentUser &&
             (guestUser ? (

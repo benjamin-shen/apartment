@@ -27,7 +27,7 @@ async function sendEmail(name, email, verified, time) {
     let html = `<p>${
       detailedInfo ? detailedInfo : "Someone"
     } rang the doorbell${url && ` on <a href="${url}">${url}</a>`}.</p>${
-      time && `<p>Time: <em>${time.format("MMMM Do YYYY, h:mma")}</em></p>`
+      time && `<p>Time: <em>${time.format("LLLL")}</em></p>`
     }`;
 
     const sender = `"${senderName}" <${gmailAuth.user}>`;

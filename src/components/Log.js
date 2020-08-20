@@ -13,6 +13,7 @@ const log = app.firestore().collection("log");
 
 const Log = ({ type }) => {
   const currentTime = moment();
+  const twoWeeksAgo = new Date(currentTime.clone().subtract(2, "weeks"));
   const prevMonthTime = currentTime.clone().subtract(1, "month");
   const currentMonth = log.doc(currentTime.format("YYYY-MM"));
   const prevMonth = log.doc(prevMonthTime.format("YYYY-MM"));
@@ -48,38 +49,50 @@ const Log = ({ type }) => {
   const [descending, setDescending] = useState(true);
 
   const expandedRows = () => {
-    const result = fullLog.map((doc) => {
-      const time = doc.get("time");
-      const user = doc.get("user");
-      const momentTime = time && moment(time.toDate());
-      return (
-        <tr key={doc.id}>
-          <td
-            title={momentTime && momentTime.format("LLLL")}
-            className="cursor-default"
-          >
-            {momentTime && momentTime.calendar()}
-          </td>
-          <td className="individual-email">
-            {user ? <a href={"mailto:" + user}>{user}</a> : "anonymous"}
-          </td>
-        </tr>
-      );
-    });
+    const result = fullLog
+      .filter((doc) => {
+        const time = doc.get("time");
+        const momentTime = time && moment(time.toDate());
+        return momentTime > twoWeeksAgo;
+      })
+      .map((doc) => {
+        const time = doc.get("time");
+        const user = doc.get("user");
+        const momentTime = time && moment(time.toDate());
+        return (
+          <tr key={doc.id}>
+            <td
+              title={momentTime && momentTime.format("LLLL")}
+              className="cursor-default"
+            >
+              {momentTime && momentTime.calendar()}
+            </td>
+            <td className="individual-email">
+              {user ? <a href={"mailto:" + user}>{user}</a> : "anonymous"}
+            </td>
+          </tr>
+        );
+      });
     return result.length ? <>{descending ? result : result.reverse()}</> : "";
   };
   const collapsedRows = () => {
     const collapsedData = {};
-    fullLog.forEach((doc) => {
-      const user = doc.get("user");
-      if (user) {
-        if (collapsedData[user]) {
-          collapsedData[user]++;
-        } else {
-          collapsedData[user] = 1;
+    fullLog
+      .filter((doc) => {
+        const time = doc.get("time");
+        const momentTime = time && moment(time.toDate());
+        return momentTime > twoWeeksAgo;
+      })
+      .forEach((doc) => {
+        const user = doc.get("user");
+        if (user) {
+          if (collapsedData[user]) {
+            collapsedData[user]++;
+          } else {
+            collapsedData[user] = 1;
+          }
         }
-      }
-    });
+      });
     const collapsedDataArray = Object.entries(collapsedData);
     collapsedDataArray.sort((a, b) => (descending ? b[1] - a[1] : a[1] - b[1]));
     const result = collapsedDataArray.map((entry) => {

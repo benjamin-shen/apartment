@@ -18,7 +18,7 @@ const isValidDate = (str) => {
 
 const appName = require("../env.json").app.name;
 const lastInvokedKey = `${appName}-lastInvokedLogin`;
-const lastInvokedThrottle = 3600000;
+const lastInvokedThrottle = 5760000000;
 
 const log = app.firestore().collection("log");
 

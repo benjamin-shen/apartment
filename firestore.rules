@@ -5,7 +5,7 @@ service cloud.firestore {
     	return request.auth != null && request.auth.token.email_verified;
     }
     function isUser() {
-    	return request.auth.uid in get(/databases/$(database)/documents/app/info).data.uids;
+    	return request.auth.uid in get(/databases/$(database)/documents/app/private).data.uids;
     }
     function notThrottled(doc) {
       return request.time >= get(/databases/$(database)/documents/log/$(doc)).data.lastUpdatedDoorbell + duration.value(1, 'm');

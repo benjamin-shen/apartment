@@ -1,6 +1,7 @@
 .back,
 .profile-btn,
 .signout,
-.view {
+.view,
+.show {
   margin: 5px;
 }

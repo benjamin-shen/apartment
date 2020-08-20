@@ -7,6 +7,7 @@ import Nav from "./Nav";
 import Back from "./Back";
 import View from "./View";
 import ProfileButton from "./ProfileButton";
+import Show from "./Show";
 import Notes from "./Notes";
 import Log from "./Log";
 import "../styles/User.css";
@@ -35,8 +36,12 @@ const User = () => {
           {info && ": " + info}
         </h1>
         <Notes type="apartment" document="private" />
-        <Log type="doorbell" />
-        <Log type="login" />
+        <Show text="View Doorbell Log">
+          <Log type="doorbell" />
+        </Show>
+        <Show text="View Login Log">
+          <Log type="login" />
+        </Show>
       </Container>
     </div>
   );

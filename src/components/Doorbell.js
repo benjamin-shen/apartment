@@ -6,6 +6,7 @@ import moment from "moment";
 import "moment-timezone";
 import app from "./base";
 import { AuthContext } from "./Auth";
+import "../styles/Doorbell.css";
 import dingdong from "../assets/sounds/dingdong.mp3";
 
 moment.tz.setDefault("Americas/New_York");
@@ -137,6 +138,7 @@ const Doorbell = () => {
       variant={!rang ? "primary" : justRang ? "success" : "warning"}
       onClick={pressDoorbell}
       disabled={justRang}
+      className="doorbell-button"
     >
       <h2>{justRang ? "Ringing..." : rang ? "Ring Again" : "Ring Doorbell"}</h2>
     </Button>
