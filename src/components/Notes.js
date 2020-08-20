@@ -3,6 +3,8 @@ import { Button } from "react-bootstrap";
 import { useCollection } from "react-firebase-hooks/firestore";
 import moment from "moment";
 import "moment-timezone";
+import linkify from "linkifyjs/html";
+import sanitizeHtml from "sanitize-html";
 import app from "./base";
 import { AuthContext } from "./Auth";
 import "../styles/Notes.css";
@@ -88,7 +90,15 @@ const Notes = ({ type, document }) => {
                 onClick={() => deleteNote(doc.id)}
               />
             )}
-            {value}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: sanitizeHtml(linkify(value), {
+                  allowedTags: sanitizeHtml.defaults.allowedTags.concat([
+                    "img",
+                  ]),
+                }),
+              }}
+            ></div>
           </td>
         </tr>
       );
