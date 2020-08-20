@@ -1,23 +1,32 @@
-.user .notes {
+.notes {
   margin: 20px 0;
   padding: 20px;
   border-radius: 10px;
 }
-.user .notes h2 {
+.notes h2 {
   display: block;
   float: left;
 }
-.user .notes .table {
+.notes p {
+  margin-bottom: 0;
+}
+.notes .table {
   margin: 0;
 }
-.user .notes td {
+.notes td {
   text-align: left;
 }
-.user .notes .add-note {
+.notes .add-note {
   border-radius: 0 0 5px 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
-.user .notes .add-note:hover {
+.notes .add-note:hover {
   background-color: rgb(233, 233, 233);
+}
+.notes .add-note img {
+  vertical-align: text-top;
+}
+.notes .add-note-btn {
+  margin-left: 10px;
 }

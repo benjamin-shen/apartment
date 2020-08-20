@@ -6,6 +6,7 @@ import Nav from "./Nav";
 import Back from "./Back";
 import View from "./View";
 import ProfileButton from "./ProfileButton";
+import Notes from "./Notes";
 import Wifi from "./Wifi";
 import "../styles/Guest.css";
 
@@ -29,6 +30,7 @@ const Guest = () => {
           Guest
           {info && ": " + info}
         </h1>
+        <Notes type="guest" document="info" />
         <Wifi />
       </Container>
     </div>

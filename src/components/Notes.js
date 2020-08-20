@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
+import { Button } from "react-bootstrap";
 import { useCollection } from "react-firebase-hooks/firestore";
 import moment from "moment";
 import "moment-timezone";
 import app from "./base";
+import { AuthContext } from "./Auth";
 import "../styles/Notes.css";
 import plus from "../assets/icons/plus.svg";
 
@@ -10,12 +12,52 @@ moment.tz.setDefault("Americas/New_York");
 
 const appCollection = app.firestore().collection("app");
 
-const Notes = ({ type, document }) => {
-  const [notes, setNotes] = useState([]);
+const NoteInput = ({ addNote, setAddingNote }) => {
+  const [noteInput, setNoteInput] = useState("");
 
-  const [snapshot, loading, error] = useCollection(
-    appCollection.doc(document).collection("notes").orderBy("priority", "desc")
+  const handleChange = (event) => {
+    setNoteInput(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    addNote(noteInput);
+    setAddingNote(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className="input-group">
+        <label className="sr-only" htmlFor="note-input">
+          Add Note
+        </label>
+        <input
+          type="text"
+          className="form-control"
+          id="note-input"
+          placeholder="Your Note"
+          onChange={handleChange}
+        />
+        <span className="input-group-btn">
+          <Button type="submit" className="add-note-btn">
+            Add
+          </Button>
+        </span>
+      </div>
+    </form>
   );
+};
+
+const Notes = ({ type, document }) => {
+  const collection = appCollection.doc(document).collection("notes");
+
+  const { guestUser } = useContext(AuthContext);
+
+  const [notes, setNotes] = useState([]);
+  const [addingNote, setAddingNote] = useState(false);
+  const [message, setMessage] = useState("");
+
+  const [snapshot, loading, error] = useCollection(collection.orderBy("time"));
   if (error) {
     console.log(JSON.stringify(error));
   }
@@ -41,18 +83,41 @@ const Notes = ({ type, document }) => {
         </tr>
       );
     });
-    return (
-      result.length && (
-        <>
-          {result}
-          <tr>
-            <td className="add-note text-center">
-              <img src={plus} width="25" alt="Add note." />
-            </td>
-          </tr>
-        </>
-      )
-    );
+    return result.length && <>{result}</>;
+  };
+
+  const mountedRef = useRef(true);
+  useEffect(() => {
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  const addNote = (note) => {
+    setMessage("Adding note...");
+    if (note) {
+      collection
+        .add({
+          time: new Date(),
+          value: note,
+        })
+        .then(() => {
+          setMessage("");
+        })
+        .catch((err) => {
+          setMessage("Error!");
+          setTimeout(() => {
+            if (!mountedRef.current) return null;
+            setMessage(err.message);
+          }, 500);
+        });
+    } else {
+      setMessage("The note was empty!");
+      setTimeout(() => {
+        if (!mountedRef.current) return null;
+        setMessage("");
+      }, 1000);
+    }
   };
 
   return (
@@ -80,8 +145,27 @@ const Notes = ({ type, document }) => {
                 </td>
               </tr>
             ))}
+          {!guestUser && (
+            <tr>
+              {addingNote ? (
+                <td>
+                  <NoteInput addNote={addNote} setAddingNote={setAddingNote} />
+                </td>
+              ) : (
+                <td
+                  className="add-note text-center"
+                  onClick={() => {
+                    setAddingNote(true);
+                  }}
+                >
+                  <img src={plus} width="22" alt="Add note." />
+                </td>
+              )}
+            </tr>
+          )}
         </tbody>
       </table>
+      {message && <p className="text-danger">{message}</p>}
     </div>
   );
 };

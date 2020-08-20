@@ -12,8 +12,8 @@
 }
 .profile input {
   min-width: 50%;
-  margin-left: 20px;
-  margin-right: 20px !important;
+  margin-left: 10px;
+  margin-right: 10px !important;
 }
 
 @media (max-width: 450px) {

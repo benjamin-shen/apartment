@@ -8,7 +8,7 @@ import Back from "./Back";
 import SignOut from "./SignOut";
 import "../styles/Profile.css";
 
-const NameInput = ({ changeName, setNameChange }) => {
+const NameInput = ({ changeName, setChangingName }) => {
   const [nameInput, setNameInput] = useState("");
 
   const handleChange = (event) => {
@@ -18,7 +18,7 @@ const NameInput = ({ changeName, setNameChange }) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     changeName(nameInput);
-    setNameChange(false);
+    setChangingName(false);
   };
 
   return (
@@ -36,9 +36,9 @@ const NameInput = ({ changeName, setNameChange }) => {
         placeholder="New Name"
         onChange={handleChange}
       />
-      <button type="submit" className="btn btn-primary mb-2">
+      <Button type="submit" className="mb-2">
         Update
-      </button>
+      </Button>
     </form>
   );
 };
@@ -49,7 +49,7 @@ const Profile = () => {
   const info = displayName || email;
 
   const [name, setName] = useState(currentUser.displayName);
-  const [nameChange, setNameChange] = useState(false);
+  const [changingName, setChangingName] = useState(false);
   const [sentPasswordReset, setSentPasswordReset] = useState(false);
   const [passwordMessage, setPasswordMessage] = useState("");
   const [nameMessage, setNameMessage] = useState("");
@@ -111,8 +111,11 @@ const Profile = () => {
         <h1>{guestUser ? "Guest" : "User"} Profile</h1>
         {email && <h2>Email: {email}</h2>}
         {name && <h2>Name: {name}</h2>}
-        {nameChange && (
-          <NameInput changeName={changeName} setNameChange={setNameChange} />
+        {changingName && (
+          <NameInput
+            changeName={changeName}
+            setChangingName={setChangingName}
+          />
         )}
         <Button
           size="lg"
@@ -128,9 +131,9 @@ const Profile = () => {
           variant={name ? "warning" : "primary"}
           className="action-button"
           onClick={() => {
-            setNameChange(true);
+            setChangingName(true);
           }}
-          disabled={nameChange}
+          disabled={changingName}
         >
           {name ? "Change" : "Set"} Name
         </Button>
